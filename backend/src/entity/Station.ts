@@ -1,10 +1,12 @@
-import { Entity, OneToMany, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { IStation } from "../interface";
-import { WorkingPlace } from './WorkingPlace'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Entity, OneToMany, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany,
+} from 'typeorm';
+import { IStation } from '../interface';
+import { WorkingPlace } from './WorkingPlace';
 
 @Entity()
 export class Station {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -12,9 +14,9 @@ export class Station {
   description: string;
 
   @Column({
-    length: 10
+    length: 10,
   })
-  UNM: string; //The unified network marking
+  UNM: string; // The unified network marking
 
   @OneToMany((type) => WorkingPlace, (workingPlace) => workingPlace.station)
   workingPlaces: WorkingPlace[];
@@ -22,18 +24,16 @@ export class Station {
   @Column()
   theNextStationId: number;
 
-  @Column()
-  thePreviousStationId: number;
+  @ManyToMany((type) => Station)
+  @JoinTable()
+  stations: Station[];
 
   public constructor(data: IStation) {
     if (data) {
       this.description = data.description;
       this.UNM = data.UNM;
       this.workingPlaces = data.workingPlaces;
-      this.theNextStationId = data.theNextStationId;
-      this.thePreviousStationId = data.thePreviousStationId;
+      this.stations = data.stations;
     }
   }
 }
-
-

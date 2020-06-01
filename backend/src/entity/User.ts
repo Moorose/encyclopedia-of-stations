@@ -3,27 +3,26 @@ import { IUser } from '../interface';
 
 @Entity()
 export class User {
-
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
-    length: 50
+    length: 50,
   })
   username: string;
 
   @Column({
-    length: 30
+    length: 30,
   })
   firstName: string;
 
   @Column({
-    length: 30
+    length: 30,
   })
   lastName: string;
 
   @Column({
-    length: 10
+    length: 10,
   })
   role: string;
 
@@ -36,5 +35,3 @@ export class User {
     }
   }
 }
-
-

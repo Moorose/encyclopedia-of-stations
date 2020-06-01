@@ -25,6 +25,5 @@ export interface IStation {
   description: string;
   UNM: string;
   workingPlaces: WorkingPlace[];
-  theNextStationId?: number;
-  thePreviousStationId?: number;
+  stations: Station[];
 }

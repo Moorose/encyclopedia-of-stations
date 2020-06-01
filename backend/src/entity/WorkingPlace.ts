@@ -1,10 +1,12 @@
-import { Entity, ManyToOne, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { IWorkingPlaces } from "../interface";
-import { Station } from "./Station";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Entity, ManyToOne, PrimaryGeneratedColumn, Column,
+} from 'typeorm';
+import { IWorkingPlaces } from '../interface';
+import { Station } from './Station';
 
 @Entity()
 export class WorkingPlace {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -33,13 +35,13 @@ export class WorkingPlace {
 
   public constructor(data: IWorkingPlaces) {
     if (data) {
-      this.telephone = data.telephone
-      this.IPAddress = data.IPAddress
-      this.password = data.password
-      this.position = data.position
-      this.description = data.description
-      this.AO = data.AO
-      this.station = data.station
+      this.telephone = data.telephone;
+      this.IPAddress = data.IPAddress;
+      this.password = data.password;
+      this.position = data.position;
+      this.description = data.description;
+      this.AO = data.AO;
+      this.station = data.station;
     }
   }
 }
