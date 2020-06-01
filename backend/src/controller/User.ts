@@ -1,12 +1,19 @@
+import UserService from '../service/UserService';
+
 export default {
-  async getById(request, h){
+  async create(request) {
+    return UserService.create(request.payload);
   },
-  async get(request, h){
+  async getById(request) {
+    return UserService.getById(request.params);
   },
-  async create(request, h){
+  async get(request) {
+    return UserService.getSimilarUser(request.payload);
   },
-  async delete(request, h){
+  async update(request) {
+    return UserService.update(request.payload);
   },
-  async update(request, h){
+  async delete(request) {
+    return UserService.delete(request.params);
   },
 };
