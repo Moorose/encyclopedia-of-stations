@@ -1,6 +1,88 @@
 // import { Bcrypt } from 'bcrypt';
+import StationController from './controller/Station';
+import UserController from './controller/User';
+import WorkingPlaceController from './controller/WorkingPlace';
 
 export default [
+  // Stations
+  {
+    method: 'GET',
+    path: '/station/{stationId}',
+    handler: StationController.getById,
+  },
+  {
+    method: 'GET',
+    path: '/station',
+    handler: StationController.getAll,
+  },
+  {
+    method: 'POST',
+    path: '/station',
+    handler: StationController.create,
+  },
+  {
+    method: 'DELETE',
+    path: '/station/{stationId}',
+    handler: StationController.delete,
+  },
+  {
+    method: 'PUT',
+    path: '/station',
+    handler: StationController.update,
+  },
+  {
+    method: 'POST',
+    path: '/station/{stationId}',
+    handler: StationController.setRelatedById,
+  },
+  // WorkingPlace
+  {
+    method: 'GET',
+    path: '/station/{stationId}/workingplace',
+    handler: WorkingPlaceController.getAll,
+  },
+  {
+    method: 'POST',
+    path: '/station/{stationId}/workingplace',
+    handler: WorkingPlaceController.create,
+  },
+  {
+    method: 'DELETE',
+    path: '/station/{stationId}/workingplace{workingplaceId}',
+    handler: WorkingPlaceController.delete,
+  },
+  {
+    method: 'PUT',
+    path: '/station/{stationId}/workingplace/{workingplaceId}',
+    handler: WorkingPlaceController.update,
+  },
+  //  Users
+  {
+    method: 'GET',
+    path: '/user/{userId}',
+    handler: UserController.getById,
+  },
+  {
+    method: 'GET',
+    path: '/user/{userId}',
+    handler: UserController.get,
+  },
+  {
+    method: 'POST',
+    path: '/user',
+    handler: UserController.create,
+  },
+  {
+    method: 'DELETE',
+    path: '/user/{userId}',
+    handler: UserController.delete,
+  },
+  {
+    method: 'PUT',
+    path: '/user',
+    handler: UserController.update,
+  },
+
   {
     method: 'GET',
     path: '/',
