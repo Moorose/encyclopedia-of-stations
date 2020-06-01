@@ -4,13 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
     "start:dev": "nodemon -e ts --exec \"npm run start\"",
     "start": "ts-node ./index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.0.2",
+    "@typescript-eslint/parser": "^3.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  },
   "dependencies": {
     "@hapi/boom": "^9.1.0",
     "@hapi/cookie": "^11.0.1",
