@@ -7,16 +7,24 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    length: 50
+  })
   username: string;
 
-  @Column()
+  @Column({
+    length: 30
+  })
   firstName: string;
 
-  @Column()
+  @Column({
+    length: 30
+  })
   lastName: string;
 
-  @Column()
+  @Column({
+    length: 10
+  })
   role: string;
 
   public constructor(data: IUser) {
