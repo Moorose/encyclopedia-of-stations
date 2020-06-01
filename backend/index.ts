@@ -17,8 +17,8 @@ const init = async () => {
     },
   });
 
-  await app.register(AuthPlugin);
-  app.auth.default('session');
+  // await app.register(AuthPlugin);
+  // app.auth.default('session');
   app.route(routes);
 
 
