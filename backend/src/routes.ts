@@ -1,7 +1,7 @@
 // import { Bcrypt } from 'bcrypt';
-import StationController from './controller/Station';
-import UserController from './controller/User';
-import WorkingPlaceController from './controller/WorkingPlace';
+import StationController from './controller/StationController';
+import UserController from './controller/UserController';
+import WorkingPlaceController from './controller/WorkingPlaceController';
 
 export default [
   // Stations
@@ -32,7 +32,7 @@ export default [
   },
   {
     method: 'POST',
-    path: '/station/{stationId}',
+    path: '/station/{parentStationId}/to/{childStationId}',
     handler: StationController.setRelatedById,
   },
   // WorkingPlace
@@ -48,12 +48,12 @@ export default [
   },
   {
     method: 'DELETE',
-    path: '/station/{stationId}/workingplace{workingplaceId}',
+    path: '/station/{stationId}/workingplace{workingPlaceId}',
     handler: WorkingPlaceController.delete,
   },
   {
     method: 'PUT',
-    path: '/station/{stationId}/workingplace/{workingplaceId}',
+    path: '/station/{stationId}/workingplace/{workingPlaceId}',
     handler: WorkingPlaceController.update,
   },
   //  Users

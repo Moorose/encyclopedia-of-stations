@@ -2,7 +2,7 @@
 import {
   Entity, ManyToOne, PrimaryGeneratedColumn, Column,
 } from 'typeorm';
-import { IWorkingPlaces } from '../interface';
+import { IWorkingPlace } from '../interface';
 import { Station } from './Station';
 
 @Entity()
@@ -33,7 +33,7 @@ export class WorkingPlace {
     { onDelete: 'CASCADE' })
   station: Station;
 
-  public constructor(data: IWorkingPlaces) {
+  public constructor(data: IWorkingPlace) {
     if (data) {
       this.telephone = data.telephone;
       this.IPAddress = data.IPAddress;

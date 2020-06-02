@@ -9,7 +9,7 @@ export interface IUser {
   role?: string;
 }
 
-export interface IWorkingPlaces {
+export interface IWorkingPlace {
   id?: string;
   position?: string;
   description?: string;

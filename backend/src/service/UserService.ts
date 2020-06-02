@@ -1,17 +1,18 @@
 import { User } from '../entity/User';
+import { IUser } from '../interface';
 
 export default {
-  create(user: User): User {
+  create(user: IUser): User {
 
   },
-  getById(userId: number): User | null {
+  getById({ userId: number }): User | null {
     return null;
   },
   getSimilarUser(user: User): User[] {
   },
-  update(user: User): User {
+  update(user: IUser): User {
     return null;
   },
-  delete(id: number): void {
+  delete({ userId: number }): void {
   },
 };
