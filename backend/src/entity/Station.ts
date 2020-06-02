@@ -24,7 +24,7 @@ export class Station {
   @Column()
   theNextStationId: number;
 
-  @ManyToMany((type) => Station)
+  @ManyToMany((type) => Station, (station) => station.stations)
   @JoinTable()
   stations: Station[];
 
