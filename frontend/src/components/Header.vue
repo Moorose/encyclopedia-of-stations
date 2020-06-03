@@ -56,7 +56,6 @@
         background-color: $alizarin-crimson-color
 
       .name
-        fon
 
     .right
       display: flex
