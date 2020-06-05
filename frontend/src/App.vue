@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <Header/>
-    <div id="nav">
+    <div class="main-wrapper">
+      <div class="menu">
+        <Header/>
+        <SubHeader/>
+      </div>
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link>
       |
       <router-link to="/about">About</router-link>
-    </div>
+    </div> -->
     <router-view/>
-    <Footer/>
+    </div>
   </div>
 </template>
 
@@ -16,7 +20,7 @@
     name: 'App',
     components: {
       Header: () => import('@/components/Header.vue'),
-      Footer: () => import('@/components/Footer.vue'),
+      SubHeader: () => import('@/components/SubHeader.vue'),
     },
   };
 </script>
@@ -29,13 +33,15 @@
     text-align: center
     color: #2c3e50
 
-  #nav
-    padding: 30px
+  .main-wrapper
+    display: flex
+    flex-direction: column
+    align-items: center
 
-    a
-      font-weight: bold
-      color: #2c3e50
-
-      &.router-link-exact-active
-        color: #42b983
+    .menu
+      width: 100%
+      display: flex
+      flex-direction: column
+      align-items: center
+      background-color: $soft-peach-color
 </style>
