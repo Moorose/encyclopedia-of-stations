@@ -35,7 +35,7 @@
 
 <style lang="sass" scoped>
 .wrapper
-  border-bottom: 2px solid $black-color
+  border-bottom: 2px solid $heder-border-color
   width: 100%
   display: flex
   justify-content: center

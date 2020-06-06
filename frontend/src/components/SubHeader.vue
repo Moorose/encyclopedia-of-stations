@@ -1,15 +1,19 @@
 <template>
-  <div class="container">
-    <div class="wrapper" v-for="option in menuOptions" :key=option.id>
-      <div v-if="option.isAllowed" class="button">
-        <router-link :to="option.to">
-          <div>{{ option.name }}</div>
-        </router-link>
-        <div v-if="option.subOptions" class="sub-wrapper">
-          <div class="dropdown" v-for="subOption in option.subOptions" :key='subOption.id'>
-            <router-link :to="subOption.to">
-              <div>{{ subOption.name }}</div>
-            </router-link>
+  <div class="wrapper">
+    <div class="container">
+      <div class="menu" v-for="option in menuOptions" :key=option.id>
+        <div v-if="option.isAllowed" class="button">
+          <router-link :to="option.to">
+            <div>{{ option.name }}</div>
+          </router-link>
+          <div v-if="option.subOptions" class="sub-wrapper">
+            <div class="dropdown" v-for="subOption in option.subOptions" :key='subOption.id'>
+              <router-link :to="subOption.to" class="link">
+                <div class="sub-option">
+                  {{ subOption.name }}
+                </div>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -75,37 +79,68 @@
 </script>
 
 <style lang="sass" scoped>
-  .container
+  .wrapper
+    border-bottom: 2px solid $heder-border-color
+    width: 100%
     display: flex
-    justify-content: flex-start
-    align-items: center
-    height: $header-height
-    width: $workspace-width
+    justify-content: center
 
-    .wrapper
-      font-size: base-unit(24)
-      height: 100%
+    .container
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      height: $header-height
+      width: $workspace-width
 
-      .button
-        width: base-unit(220)
-        display: flex
-        align-items: center
-        justify-content: center
+      .menu
+        font-size: base-unit(24)
         height: 100%
+        border-left: 2px solid $heder-border-color
 
-        &:hover
-          background-color: $dust-storm-color
+        &:first-child
+          border-left: none
 
-        .sub-wrapper
+        .button
+          width: base-unit(220)
+          display: flex
+          align-items: center
+          justify-content: center
+          height: 100%
           position: relative
 
-          .dropdown
+          &:hover
             background-color: $dust-storm-color
-            display: none
-            width: base-unit(403)
-            height: base-unit(135)
 
-            &:hover
-              display: block
+          &:hover > .sub-wrapper
+            display: flex
+
+          .sub-wrapper
+            display: none
+            flex-direction: column
+            position: absolute
+            top: 100%
+            left: - base-unit(2)
+            border: 2px solid $heder-border-color
+
+            .dropdown
+              display: flex
+              align-items: center
               background-color: $dust-storm-color
+              width: base-unit(325)
+
+              &:last-child
+                padding-bottom: base-unit(20)
+
+              .link
+                width: 100%
+
+              .sub-option
+                margin-top: base-unit(20)
+                height: base-unit(50)
+                line-height: base-unit(50)
+                padding-left: base-unit(31)
+                text-align: start
+
+                &:hover
+                  background-color: $soft-peach-color
 </style>
