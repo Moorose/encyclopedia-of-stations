@@ -11,30 +11,30 @@
 </template>
 
 <script>
-export default {
-  name: 'Profile',
-  data() {
-    return {
-      dataMap: ['ID', 'Имя пользователя', 'Должность', 'Роль'],
-      userData: {
-        id: 1,
-        username: 'Алексей228',
-        firstName: 'Алексей',
-        lastName: 'Благой',
-        role: 'Технолог',
-      },
-    };
-  },
-  computed: {
-    user() {
-      const {
-        id, username, firstName, lastName, role,
-      } = this.userData;
-
-      return [id, `${username}, ${firstName}, ${lastName}`, role];
+  export default {
+    name: 'Profile',
+    data() {
+      return {
+        dataMap: ['ID', 'Имя пользователя', 'Должность', 'Роль'],
+        userData: {
+          id: 1,
+          username: 'Алексей228',
+          firstName: 'Алексей',
+          lastName: 'Благой',
+          role: 'Технолог',
+        },
+      };
     },
-  },
-};
+    computed: {
+      user() {
+        const {
+          id, username, firstName, lastName, role,
+        } = this.userData;
+
+        return [id, `${username}, ${firstName}, ${lastName}`, role];
+      },
+    },
+  };
 </script>
 
 <style lang="sass" scoped>

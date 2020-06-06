@@ -80,7 +80,7 @@
 
 <style lang="sass" scoped>
   .wrapper
-    border-bottom: 2px solid $heder-border-color
+    border-bottom: 2px solid $blossom-color
     width: 100%
     display: flex
     justify-content: center
@@ -95,7 +95,7 @@
       .menu
         font-size: base-unit(24)
         height: 100%
-        border-left: 2px solid $heder-border-color
+        border-left: 2px solid $blossom-color
 
         &:first-child
           border-left: none
@@ -120,7 +120,7 @@
             position: absolute
             top: 100%
             left: - base-unit(2)
-            border: 2px solid $heder-border-color
+            border: 2px solid $blossom-color
 
             .dropdown
               display: flex
