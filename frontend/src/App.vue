@@ -32,7 +32,7 @@
     computed: {
       ...mapState('user', ['loggedIn']),
     },
-    methods:{
+    methods: {
       ...mapActions('user', ['getUserInfo']),
     },
   };

@@ -2,15 +2,13 @@
   <div class="wrapper">
     <span class="title">Вход в систему</span>
     <div class="form">
-      <input v-model="login" @blur="checkError" type="text" placeholder="Логин" class="field login">
-      <input v-model="password" @blur="checkError" type="password" placeholder="Пароль" class="field password">
+      <input v-model="login" @blur="checkError" type="text" placeholder="Логин" class="field">
+      <input v-model="password" @blur="checkError" type="password" placeholder="Пароль" class="field">
     </div>
     <div v-if="error" class="error">
       {{ error }}
     </div>
-    <button class="button" @click="loginHandler">
-      Вход
-    </button>
+    <Button class="button" :text="loginButtonText" @click="loginHandler"/>
   </div>
 </template>
 
@@ -19,8 +17,12 @@
 
   export default {
     name: 'Auth',
+    components: {
+      Button: () => import('@/components/Button.vue'),
+    },
     data() {
       return {
+        loginButtonText: 'Вход',
         login: '',
         password: '',
         error: null,
@@ -45,7 +47,7 @@
 
           return;
         }
-        this.setError('Поля должны бытьзаполнены');
+        this.setError('Поля должны быть заполнены');
       },
       setError(error) {
         this.password = '';
@@ -95,13 +97,6 @@
       margin-bottom: base-unit(25)
 
     .button
-      background-color: $soft-peach-color
-      border: 2px solid $blossom-color
-      border-radius: 10px
-      font-size: base-unit(30)
       width: base-unit(150)
       height: base-unit(50)
-
-      &:hover
-        background-color: $dust-storm-color
 </style>

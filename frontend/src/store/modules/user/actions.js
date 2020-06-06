@@ -12,7 +12,7 @@ const actions = {
     commit('removeUser');
     commit('setLoggedIn', false);
   },
-  getUserInfo({ commit }) {
+  getUserInfo(/* { commit } */) {
     // return axios.get('/api/me')
     //   .then((response) => {
     //     commit('setUser', response);

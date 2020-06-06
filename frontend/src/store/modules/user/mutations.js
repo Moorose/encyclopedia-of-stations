@@ -5,7 +5,7 @@ const mutations = {
   removeUser(state) {
     state.user = null;
   },
-  setLoggedIn(state, value){
+  setLoggedIn(state, value) {
     state.loggedIn = value;
   },
 };
