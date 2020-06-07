@@ -13,6 +13,11 @@ const users = [
 export default [
   // auth test
   {
+    method: 'get',
+    path: '/me',
+    handler: UserController.getMe,
+  },
+  {
     method: 'POST',
     path: '/login',
     handler: authUser,

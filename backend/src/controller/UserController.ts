@@ -4,6 +4,9 @@ export default {
   async create(request) {
     return UserService.create(request.payload);
   },
+  async getMe(request) {
+    return UserService.getMe(request.auth.credentials);
+  },
   async getById(request) {
     return UserService.getById(request.params);
   },

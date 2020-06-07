@@ -15,6 +15,13 @@ export default {
 
     return repository.find();
   },
+  getMe(credentials: IUser): Promise<IUser> {
+    const user: IUser = {...credentials}
+
+    delete user.password
+
+    return Promise.resolve(user)
+  },
   getById({ userId }): Promise<User> {
     const repository: Repository<User> = getRepository(User);
 
