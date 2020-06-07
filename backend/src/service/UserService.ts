@@ -20,11 +20,16 @@ export default {
 
     return repository.findOne(userId);
   },
+  getByLogin(login): Promise<User> {
+    const repository: Repository<User> = getRepository(User);
+
+    return repository.findOne({ where: { login } });
+  },
   getSimilarUser(user: IUser): Promise<User[]> {
     const repository: Repository<User> = getRepository(User);
 
     const conditions = Object.entries(user).map(([key, value]) => {
-      if (typeof value === 'number'){
+      if (typeof value === 'number') {
         return { [key]: value }
       }
       return { [key]: Like(value) }

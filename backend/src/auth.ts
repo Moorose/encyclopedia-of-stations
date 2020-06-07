@@ -21,9 +21,6 @@ async function register(server) {
     validateFunc: async (request, session) => {
       const account = await UserService.getById(session.id)
 
-      console.log('account');
-      console.log(account);
-
       if (!account) {
         return { valid: false };
       }
