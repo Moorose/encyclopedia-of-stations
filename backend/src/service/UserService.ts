@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, Like } from 'typeorm';
 import { User } from '../entity/User';
 import { IUser } from '../interface';
 import { hashPassword } from '../helper'
@@ -23,11 +23,14 @@ export default {
   getSimilarUser(user: IUser): Promise<User[]> {
     const repository: Repository<User> = getRepository(User);
 
-    return repository.find({
-      where:[
-        {},
-      ]
+    const conditions = Object.entries(user).map(([key, value]) => {
+      if (typeof value === 'number'){
+        return { [key]: value }
+      }
+      return { [key]: Like(value) }
     });
+
+    return repository.find({ where: conditions });
   },
   async update(user: IUser): Promise<User> {
     const repository: Repository<User> = getRepository(User);
