@@ -40,6 +40,7 @@ module.exports = {
     'max-len': ['error', { code: 120 }],
     'vue/script-indent': ['error', 2, { baseIndent: 1 }],
     indent: ['error', 2],
+    'import/prefer-default-export': 'off',
     'operator-linebreak': 'off',
     'vue/no-parsing-error': 'off',
     'vue/valid-v-if': 'off',

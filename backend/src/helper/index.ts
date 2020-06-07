@@ -25,16 +25,20 @@ export async function logout(request): Promise<any> {
   return Promise.resolve({ message: 'Logout succeed' });
 }
 
-export async function authUser(request): Promise<any> {
-  const { username, password } = request.payload;
-  const account = await UserService.getByLogin(username);
+export async function authUser(request): Promise<User> {
+  const { login, password } = request.payload;
+  const account = await UserService.getByLogin(login);
 
   if (!account || !(await comparePassword(password, account.password))) {
     throw Boom.unauthorized(`Authentication failed: ${ request.auth.error.message }`);
   }
   request.cookieAuth.set({ id: account.id });
 
-  return Promise.resolve({ message: 'Authentication succeed' });
+  const user: User = {...account}
+
+  delete user.password
+
+  return Promise.resolve(user);
 }
 
 export async function setAdmin(): Promise<User> {

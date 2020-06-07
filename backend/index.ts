@@ -3,7 +3,7 @@ import { server } from '@hapi/hapi';
 import AuthPlugin from './src/auth';
 import { createConnection } from 'typeorm';
 import routes from './src/routes';
-import {setAdmin} from './src/helper';
+import { setAdmin } from './src/helper';
 import 'reflect-metadata';
 
 config();
@@ -17,19 +17,26 @@ const init = async () => {
     debug: {
       request: ['error'],
     },
+    routes: {
+      cors: {
+        origin: ["*"],
+        credentials: true,
+        headers: ["Accept", "Content-Type", 'Access-Control-Allow-Credentials'],
+        additionalHeaders: ["X-Requested-With"]
+      }
+    }
   });
 
   await app.register(AuthPlugin);
   app.auth.default('session');
   app.route(routes);
 
-
   await createConnection();
   await setAdmin();
   await app.start();
 
   // eslint-disable-next-line no-console
-  console.log(`Server running on ${app.info.uri}`);
+  console.log(`Server running on ${ app.info.uri }`);
 };
 
 process.on('unhandledRejection', (err) => {

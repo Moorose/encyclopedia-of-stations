@@ -1,25 +1,33 @@
+import { UserApi } from '@/api';
+// import UserApi from '../../../api';
+
 const actions = {
   loginAction({ commit }, { login, password }) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        commit('setUser', { login, password, username: 'Eugene Vigonniy' });
+    return UserApi.login(login, password)
+      .then(({ data }) => {
+        console.log(data);
+        commit('setUser', data);
         commit('setLoggedIn', true);
-        resolve();
-      }, 1000);
-    });
+      });
   },
   logout({ commit }) {
-    commit('removeUser');
-    commit('setLoggedIn', false);
+    return UserApi.logout()
+      .then((response) => {
+        console.log(response);
+        commit('removeUser');
+        commit('setLoggedIn', false);
+      });
   },
-  getUserInfo(/* { commit } */) {
-    // return axios.get('/api/me')
-    //   .then((response) => {
-    //     commit('setUser', response);
-    //     commit('setLoggedIn', true);
-    //
-    //     return response;
-    //   });
+  getUserInfo({ commit }) {
+    return UserApi.getMe()
+      .then((response) => {
+        console.log(response);
+        commit('setUser', response);
+        commit('setLoggedIn', true);
+
+        return response;
+      }, () => {
+      });
   },
 };
 

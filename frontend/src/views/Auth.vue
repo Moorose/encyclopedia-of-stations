@@ -41,8 +41,8 @@
             login,
             password,
           })
-            .catch((error) => {
-              this.setError(error);
+            .catch(() => {
+              this.setError('Неверный логин или пароль');
             });
 
           return;
