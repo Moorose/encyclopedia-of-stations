@@ -1,15 +1,18 @@
 import { WorkingPlace } from "../entity/WorkingPlace";
 import { Station } from "../entity/Station";
+import { UserRole } from '../enum/UserRole';
 
 export interface IUser {
   id?: string;
-  username: string;
+  login: string;
   firstName: string;
   lastName: string;
-  role?: string;
+  patronymicName: string;
+  password?: string;
+  role: UserRole;
 }
 
-export interface IWorkingPlaces {
+export interface IWorkingPlace {
   id?: string;
   position?: string;
   description?: string;

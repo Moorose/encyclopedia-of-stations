@@ -1,12 +1,11 @@
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-var-requires */
+import UserService from './service/UserService';
 
-const user = {
-  username: 'john',
-  password: 'test',
-  name: 'John Doe',
-  cookieId: '154',
-};
+const users = [
+  { username: 'john', password: 'test', id: '1' },
+  { username: 'tom', password: 'test', id: '2' },
+];
 
 async function register(server) {
   await server.register(require('@hapi/cookie'));
@@ -15,30 +14,18 @@ async function register(server) {
     cookie: {
       name: process.env.COOKIE_NAME,
       password: process.env.AUTH_COOKIE_PASSWORD,
-      isSecure: process.env.NODE_ENV !== 'development',
+      // isSecure: process.env.NODE_ENV !== 'development',
+      isSecure: false,
       path: '/',
     },
     validateFunc: async (request, session) => {
-      if (session.cookieId !== user.cookieId) {
+      const account = await UserService.getById(session.id)
+
+      if (!account) {
         return { valid: false };
       }
 
-      return { valid: true, credentials: user };
-
-      // const user = await getRepository(User).findOne(session.id);
-
-      // if (!user) {
-      //   return {
-      //     valid: false,
-      //   };
-      // }
-
-      // return {
-      //   valid: true,
-      //   credentials: {
-      //     user: session.id,
-      //   },
-      // };
+      return { valid: true, credentials: account };
     },
   });
   server.log('info', 'Plugin registered: authentication with Cookie');
