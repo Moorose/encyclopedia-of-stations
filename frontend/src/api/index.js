@@ -7,7 +7,10 @@ export const UserApi = {
     return axios.get(`${API}/me`);
   },
   login(login, password) {
-    return axios.post(`${API}/login`, { login, password });
+    return axios.post(`${API}/login`, {
+      login,
+      password,
+    });
   },
   logout() {
     return axios.post(`${API}/logout`);
@@ -15,8 +18,8 @@ export const UserApi = {
   getById(userId) {
     return axios.get(`${API}/user/${userId}`);
   },
-  getSimilarUser(user) {
-    return axios.get(`${API}/user`, user);
+  getSimilarUser(param) {
+    return axios.get(`${API}/user/${param}`);
   },
   create(user) {
     return axios.post(`${API}/user`, user);
@@ -30,7 +33,31 @@ export const UserApi = {
 };
 
 export const StationApi = {
-  getStationByName() {
-    return axios.get(`${API}/me`);
+  getById(stationId) {
+    return axios.get(`${API}/station/${stationId}`);
   },
+  getByUNM(UNM) {
+    return axios.get(`${API}/station/unm/${UNM}`);
+  },
+  getByName(name) {
+    console.log(name);
+
+    return axios.get(`${API}/station/name/${name}`);
+  },
+  getAll() {
+    return axios.get(`${API}/station`);
+  },
+  create(station) {
+    return axios.post(`${API}/station`, station);
+  },
+  delete(stationId) {
+    return axios.delete(`${API}/station/${stationId}`);
+  },
+  update(station) {
+    return axios.put(`${API}/station`, station);
+  },
+  setRelatedById(parentStationId, childStationId) {
+    return axios.post(`${API}/station/${parentStationId}/to/${childStationId}`);
+  },
+
 };

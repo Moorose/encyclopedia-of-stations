@@ -11,7 +11,7 @@ const users = [
 ];
 
 export default [
-  // auth test
+  // auth
   {
     method: 'get',
     path: '/me',
@@ -37,6 +37,15 @@ export default [
     method: 'GET',
     path: '/station/{stationId}',
     handler: StationController.getById,
+  },{
+    method: 'GET',
+    path: '/station/unm/{UNM}',
+    handler: StationController.getByUNM,
+  },
+  {
+    method: 'GET',
+    path: '/station/name/{name}',
+    handler: StationController.getByName,
   },
   {
     method: 'GET',

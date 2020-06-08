@@ -39,7 +39,7 @@ export default {
       if (typeof value === 'number') {
         return { [key]: value }
       }
-      return { [key]: Like(value) }
+      return { [key]: Like(`%${value}%`) }
     });
 
     return repository.find({ where: conditions });

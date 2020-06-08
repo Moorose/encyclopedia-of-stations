@@ -6,7 +6,9 @@
       </div>
       <div v-if="loggedIn" class="auth-menu">
         <div v-if="user" class="user">
-          {{ user.username }}
+          <router-link to="/profile">
+            {{ user.username }}
+          </router-link>
         </div>
         <div @click="logout" class="exit">
           Выход

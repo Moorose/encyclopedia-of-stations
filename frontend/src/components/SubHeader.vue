@@ -30,24 +30,32 @@
         menuOptions: [
           {
             id: 1,
-            name: 'Поиск',
+            name: 'Станции',
             isAllowed: true,
             to: '/',
+            subOptions: [
+              {
+                id: 8,
+                name: 'Поиск станций',
+                isAllowed: true,
+                to: '/',
+              },
+              {
+                id: 9,
+                name: 'Добавить станцию',
+                isAllowed: true,
+                to: '/station/add',
+              },
+            ],
           },
           {
             id: 2,
             name: 'Карта',
             isAllowed: true,
-            to: '/',
+            to: '/map',
           },
           {
             id: 3,
-            name: 'Общий список',
-            isAllowed: true,
-            to: '/',
-          },
-          {
-            id: 4,
             name: 'Пользователи',
             isAllowed: true,
             to: '/',
@@ -70,7 +78,7 @@
             id: 7,
             name: 'О нас',
             isAllowed: true,
-            to: '/',
+            to: '/about',
           },
         ],
       };

@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Like, Repository } from 'typeorm';
 import { Station } from '../entity/Station';
 import { IStation } from '../interface/index';
 
@@ -8,6 +8,18 @@ export default {
     const repository: Repository<Station> = getRepository(Station);
 
     return repository.findOne(stationId, { relations: ['stations'] });
+  },
+  getByUNM({ UNM }): Promise<Station> {
+    const repository: Repository<Station> = getRepository(Station);
+
+    return repository.findOne({ where: { UNM: UNM } },);
+  },
+  getByName({ name }): Promise<Station[]> {
+    const repository: Repository<Station> = getRepository(Station);
+
+    return repository.createQueryBuilder("station")
+      .where('name ILIKE :name', { name: `%${ name }%` })
+      .getMany();
   },
   getAll(): Promise<Station[]> {
     const repository: Repository<Station> = getRepository(Station);

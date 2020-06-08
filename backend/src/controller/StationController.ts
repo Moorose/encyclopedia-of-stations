@@ -4,6 +4,12 @@ export default {
   async getById(request) {
     return StationService.getById(request.params);
   },
+  async getByUNM(request) {
+    return StationService.getByUNM(request.params);
+  },
+  async getByName(request) {
+    return StationService.getByName(request.params);
+  },
   async getAll() {
     return StationService.getAll();
   },

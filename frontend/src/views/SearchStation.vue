@@ -5,10 +5,29 @@
       <span class="header">
       Введите название станции
       </span>
-    <input v-model="searchValue" @blur="searchStations" type="text" :placeholder="placeholder" class="field">
+      <input
+        v-model="searchValue"
+        @change="searchStations"
+        type="text"
+        :placeholder="placeholder"
+        class="field"
+      >
     </div>
     <div class="table">
-      place  for  data
+      <div class="header cell id">ID</div>
+      <div class="header cell station">Наименование станции</div>
+      <div class="header cell unm">ЕСР</div>
+      <template v-for="station in stations">
+        <router-link :key="`id${station.id}`" :to="`/station/${station.id}`">
+          <div class="data cell id">{{station.id}}</div>
+        </router-link>
+        <router-link :key="`name${station.id}`" :to="`/station/${station.id}`">
+          <div class="data cell station">{{station.name}}</div>
+        </router-link>
+        <router-link :key="`UNM${station.id}`" :to="`/station/${station.id}`">
+          <div class="data cell unm">{{station.UNM}}</div>
+        </router-link>
+      </template>
     </div>
   </div>
 </template>
@@ -29,10 +48,16 @@
       ...mapActions('user', ['getUserInfo']),
       ...mapActions('stations', ['searchStationsByName']),
       async searchStations() {
-        const stations = await this.searchStationsByName(this.searchValue);
+        const { searchValue } = this;
 
-        console.log('search');
+        if (!searchValue) {
+          return;
+        }
+
+        const stations = await this.searchStationsByName(searchValue);
+
         console.log(stations);
+        this.stations = stations;
       },
     },
   };
@@ -69,5 +94,31 @@
 
     .table
       display: grid
+      grid-template-columns: base-unit(100) auto base-unit(150)
+
+      .cell
+        display: flex
+        align-items: center
+        justify-content: center
+        height: base-unit(50)
+        border-bottom: 2px solid $blossom-color
+
+        &.id
+          border-right: 2px solid $blossom-color
+
+        &.station
+          padding-left: base-unit(30)
+          justify-content: flex-start
+
+        &.unm
+          border-left: 2px solid $blossom-color
+
+      .header
+        background-color: $dust-storm-color
+        border-top: 2px solid $blossom-color
+        font-size: base-unit(30)
+
+      .data
+        font-size: base-unit(24)
 
 </style>
