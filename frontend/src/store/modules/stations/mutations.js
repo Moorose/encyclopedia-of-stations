@@ -1,3 +1,7 @@
-const mutations = {};
+const mutations = {
+  setStations() {
+
+  },
+};
 
 export default mutations;

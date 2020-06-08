@@ -28,3 +28,9 @@ export const UserApi = {
     return axios.put(`${API}/user`, user);
   },
 };
+
+export const StationApi = {
+  getStationByName() {
+    return axios.get(`${API}/me`);
+  },
+};
