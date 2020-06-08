@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-
     <div class="search-bar">
       <span class="header">
       Введите название станции

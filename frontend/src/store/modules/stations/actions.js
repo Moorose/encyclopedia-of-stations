@@ -5,7 +5,7 @@ const actions = {
   searchStationsByName({ commit }, name) {
     return StationApi.getByName(name)
       .then(({ data }) => {
-        commit('setStations', data);
+        commit('setCashedStations', data);
 
         return data;
       }, () => {
