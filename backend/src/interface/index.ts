@@ -1,6 +1,7 @@
 import { WorkingPlace } from "../entity/WorkingPlace";
 import { Station } from "../entity/Station";
 import { UserRole } from '../enum/UserRole';
+import { StationClass } from "../enum/StationClass";
 
 export interface IUser {
   id?: string;
@@ -25,8 +26,10 @@ export interface IWorkingPlace {
 
 export interface IStation {
   id?: string;
+  name: string;
   description: string;
-  UNM: string;
+  UNM: number;
+  stationClass: StationClass;
   workingPlaces: WorkingPlace[];
   stations: Station[];
 }

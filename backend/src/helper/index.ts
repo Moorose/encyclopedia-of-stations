@@ -1,9 +1,12 @@
 import { User } from '../entity/User';
-import { IUser } from '../interface';
+import { IStation, IUser } from '../interface';
 import UserService from '../service/UserService';
+import StationService from '../service/StationService';
 import { UserRole } from '../enum/UserRole';
 import bcrypt from 'bcryptjs';
 import * as Boom from "@hapi/boom";
+import { StationClass } from "../enum/StationClass";
+import { Station } from "../entity/Station";
 
 export async function hashPassword(password): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -34,7 +37,7 @@ export async function authUser(request): Promise<User> {
   }
   request.cookieAuth.set({ id: account.id });
 
-  const user: User = {...account}
+  const user: User = { ...account }
 
   delete user.password
 
@@ -57,5 +60,40 @@ export async function setAdmin(): Promise<User> {
   admin.password = await this.hashPassword(process.env.ADMIN_PASSWORD)
 
   return UserService.create(admin);
+};
+
+export async function setStations(): Promise<Station[]> {
+  const isStationsExist = await StationService.getAll();
+
+  if(isStationsExist.length) {
+    return Promise.resolve([]);
+  }
+
+  const stations: IStation[] = [{
+    name: "Omskaiy Station",
+    UNM: 666666,
+    description: "Just station",
+    stationClass: StationClass.PASSENGER_STATION,
+    stations: [],
+    workingPlaces: [],
+  }, {
+    name: "Novosibirskaya Station",
+    UNM: 777777,
+    description: "Just station",
+    stationClass: StationClass.PASSENGER_STATION,
+    stations: [],
+    workingPlaces: [],
+  }, {
+    name: "Tomskaiy Station",
+    UNM: 555555,
+    description: "Just station",
+    stationClass: StationClass.PASSENGER_STATION,
+    stations: [],
+    workingPlaces: [],
+  },];
+
+  return Promise.all(
+    stations.map(station => StationService.create(station))
+  );
 };
 

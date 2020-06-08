@@ -3,7 +3,7 @@ import { server } from '@hapi/hapi';
 import AuthPlugin from './src/auth';
 import { createConnection } from 'typeorm';
 import routes from './src/routes';
-import { setAdmin } from './src/helper';
+import { setAdmin, setStations } from './src/helper';
 import 'reflect-metadata';
 
 config();
@@ -33,6 +33,7 @@ const init = async () => {
 
   await createConnection();
   await setAdmin();
+  await setStations();
   await app.start();
 
   // eslint-disable-next-line no-console
