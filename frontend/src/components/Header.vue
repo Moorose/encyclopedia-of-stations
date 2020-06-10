@@ -7,7 +7,7 @@
       <div v-if="loggedIn" class="auth-menu">
         <div v-if="user" class="user">
           <router-link to="/profile">
-            {{ user.username }}
+            {{ username }}
           </router-link>
         </div>
         <div @click="logout" class="exit">
@@ -25,6 +25,11 @@
     name: 'Header',
     computed: {
       ...mapState('user', ['loggedIn', 'user']),
+      username() {
+        const { user } = this;
+
+        return `${user.firstName} ${user.lastName} ${user.patronymicName}`;
+      },
     },
     methods: {
       ...mapActions('user', ['logout']),

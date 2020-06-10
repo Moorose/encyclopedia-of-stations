@@ -8,7 +8,12 @@
     <div v-if="error" class="error">
       {{ error }}
     </div>
-    <Button class="button" :text="loginButtonText" @click="loginHandler"/>
+    <Button
+    class="button"
+    :text="loginButtonText"
+    @click="loginHandler"
+    @keydown="loginHandler"
+    />
   </div>
 </template>
 
@@ -83,6 +88,7 @@
         font-size: base-unit(24)
         border-radius: 10px
         margin-bottom: base-unit(25)
+        padding-left: base-unit(10)
         background-color: $soft-peach-color
 
         &:hover

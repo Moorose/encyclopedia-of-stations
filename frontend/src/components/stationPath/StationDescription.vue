@@ -21,7 +21,6 @@
     name: 'StationDescription',
     components: {
       Button: () => import('@/components/Button.vue'),
-
     },
     props: {
       station: {

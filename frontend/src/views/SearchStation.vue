@@ -76,6 +76,7 @@
         margin-bottom: base-unit(20)
 
       .field
+        padding-left: base-unit(10)
         width: 100%
         height: base-unit(40)
         border: 2px solid $blossom-color
@@ -98,17 +99,10 @@
         align-items: center
         justify-content: center
         height: base-unit(50)
-        border-bottom: 2px solid $blossom-color
-
-        &.id
-          border-right: 2px solid $blossom-color
 
         &.station
           padding-left: base-unit(30)
           justify-content: flex-start
-
-        &.unm
-          border-left: 2px solid $blossom-color
 
       .header
         background-color: $dust-storm-color

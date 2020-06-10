@@ -70,7 +70,7 @@
                 id: 6,
                 name: 'Добавить полбзователя',
                 isAllowed: true,
-                to: '/user/add',
+                to: '/user/create',
               },
             ],
           },

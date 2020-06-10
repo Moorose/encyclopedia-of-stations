@@ -1,10 +1,11 @@
 import bcrypt from 'bcryptjs';
 import * as Boom from '@hapi/boom';
+import { UserRole } from '../enum/UserRole';
 import { User } from '../entity/User';
 import UserService from '../service/UserService';
 import StationService from '../service/StationService';
 import { Station } from '../entity/Station';
-import { admin, getTestUsers } from '../testData/Users';
+import { getTestUsers } from '../testData/Users';
 import { stations } from '../testData/Stations';
 import { IUser } from '../interface';
 
@@ -46,6 +47,15 @@ export async function authUser(request): Promise<User> {
 }
 
 export async function setAdmin(): Promise<User> {
+  const admin: IUser = {
+    login: 'Admin',
+    firstName: process.env.ADMIN_FIRST,
+    lastName: process.env.ADMIN_LAST,
+    patronymicName: process.env.ADMIN_PATRONYMIC,
+    position: 'Технолог',
+    role: UserRole.Admin,
+  };
+
   const [isAdminExists] = await UserService.getSimilarUser(admin);
 
   if (isAdminExists) {
@@ -58,8 +68,9 @@ export async function setAdmin(): Promise<User> {
 
 export async function setTestUsers(): Promise<User[]> {
   const users: IUser[] = getTestUsers();
+  const password = await this.hashPassword('test');
 
-  await Promise.all(users.map((user) => this.hashPassword('test')));
+  users.forEach((user) => { user.password = password; });
 
   return Promise.all(
     users.map((user) => UserService.create(user)),

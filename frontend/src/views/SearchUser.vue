@@ -90,6 +90,7 @@
         margin-bottom: base-unit(20)
 
       .field
+        padding-left: base-unit(10)
         width: 100%
         height: base-unit(40)
         border: 2px solid $blossom-color

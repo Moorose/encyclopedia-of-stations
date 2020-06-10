@@ -19,15 +19,6 @@ function generateName() {
   return capFirst(name2[getRandomInt(0, name2.length + 1)]);
 }
 
-export const admin: IUser = {
-  login: 'Admin',
-  firstName: process.env.ADMIN_FIRST,
-  lastName: process.env.ADMIN_LAST,
-  patronymicName: process.env.ADMIN_PATRONYMIC,
-  position: 'Технолог',
-  role: UserRole.Admin,
-};
-
 export const getTestUsers = (): IUser[] => {
   const users: IUser[] = [];
 
