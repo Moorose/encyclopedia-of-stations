@@ -13,23 +13,26 @@
       >
     </div>
     <div class="table">
-      <div class="header cell">ID</div>
+      <div class="header cell id">ID</div>
       <div class="header cell">ФИО</div>
       <div class="header cell">Login</div>
       <div class="header cell">Должность</div>
       <div class="header cell">Роль</div>
       <template v-for="user in users">
         <router-link :key="`id${user.id}`" :to="`/user/${user.id}`">
-          <div class="data cell">{{user.id}}</div>
+          <div class="data cell id">{{user.id}}</div>
         </router-link>
-        <router-link :key="`name${user.id}`" :to="`/user/${user.id}`">
+        <router-link :key="`username${user.id}`" :to="`/user/${user.id}`">
           <div class="data cell">{{username(user)}}</div>
         </router-link>
-        <router-link :key="`name${user.id}`" :to="`/user/${user.id}`">
+        <router-link :key="`login${user.id}`" :to="`/user/${user.id}`">
           <div class="data cell">{{user.login}}</div>
         </router-link>
-        <router-link :key="`name${user.id}`" :to="`/user/${user.id}`">
-          <div class="data cell">{{user.login}}</div>
+        <router-link :key="`position${user.id}`" :to="`/user/${user.id}`">
+          <div class="data cell">{{user.position}}</div>
+        </router-link>
+        <router-link :key="`role${user.id}`" :to="`/user/${user.id}`">
+          <div class="data cell">{{user.role}}</div>
         </router-link>
       </template>
     </div>
@@ -102,17 +105,17 @@
 
     .table
       display: grid
-      grid-template-columns: base-unit(100) auto base-unit(150)
+      grid-template-columns: base-unit(70) auto repeat(3, base-unit(300))
 
       .cell
         display: flex
         align-items: center
         justify-content: center
         height: base-unit(50)
-        border-bottom: 2px solid $blossom-color
+        border-left: 2px solid $blossom-color
 
         &.id
-          border-right: 2px solid $blossom-color
+          border-left: none
 
       .header
         background-color: $dust-storm-color

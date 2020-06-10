@@ -102,8 +102,13 @@ export default [
   },
   {
     method: 'GET',
-    path: '/user',
-    handler: UserController.get,
+    path: '/user/string/{str}',
+    handler: UserController.getByString,
+  },
+  {
+    method: 'GET',
+    path: '/user/query{query}',
+    handler: UserController.getWithQuery,
   },
   {
     method: 'POST',

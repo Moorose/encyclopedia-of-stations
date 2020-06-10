@@ -1,6 +1,6 @@
-import { getRepository, Like, Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { Station } from '../entity/Station';
-import { IStation } from '../interface/index';
+import { IStation } from '../interface';
 
 
 export default {

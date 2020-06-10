@@ -62,7 +62,7 @@ module.exports = {
     'import/no-unresolved': 0,
     'import/extensions': 0,
     'import/prefer-default-export': 0,
+    '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 0,
-    '@typescript-eslint/interface-name-prefix': ['error', { prefixWithI: 'always' }],
   },
 };

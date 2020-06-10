@@ -58,7 +58,7 @@
             id: 3,
             name: 'Пользователи',
             isAllowed: true,
-            to: '/',
+            to: '/user',
             subOptions: [
               {
                 id: 5,
@@ -70,7 +70,7 @@
                 id: 6,
                 name: 'Добавить полбзователя',
                 isAllowed: true,
-                to: '/',
+                to: '/user/add',
               },
             ],
           },

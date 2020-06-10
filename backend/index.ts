@@ -3,7 +3,7 @@ import { server } from '@hapi/hapi';
 import { createConnection } from 'typeorm';
 import AuthPlugin from './src/auth';
 import routes from './src/routes';
-import { setAdmin, setStations } from './src/helper';
+import { setAdmin, setStations, setTestUsers } from './src/helper';
 import 'reflect-metadata';
 
 config();
@@ -33,6 +33,7 @@ const init = async () => {
 
   await createConnection();
   await setAdmin();
+  await setTestUsers();
   await setStations();
   await app.start();
 

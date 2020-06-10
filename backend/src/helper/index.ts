@@ -1,12 +1,12 @@
 import bcrypt from 'bcryptjs';
 import * as Boom from '@hapi/boom';
 import { User } from '../entity/User';
-import { IStation, IUser } from '../interface';
 import UserService from '../service/UserService';
 import StationService from '../service/StationService';
-import { UserRole } from '../enum/UserRole';
-import { StationClass } from '../enum/StationClass';
 import { Station } from '../entity/Station';
+import { admin, getTestUsers } from '../testData/Users';
+import { stations } from '../testData/Stations';
+import { IUser } from '../interface';
 
 export async function hashPassword(password): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -46,14 +46,6 @@ export async function authUser(request): Promise<User> {
 }
 
 export async function setAdmin(): Promise<User> {
-  const admin: IUser = {
-    login: 'Admin',
-    firstName: process.env.ADMIN_FIRST,
-    lastName: process.env.ADMIN_LAST,
-    patronymicName: process.env.ADMIN_PATRONYMIC,
-    position: 'Технолог',
-    role: UserRole.Admin,
-  };
   const [isAdminExists] = await UserService.getSimilarUser(admin);
 
   if (isAdminExists) {
@@ -64,35 +56,22 @@ export async function setAdmin(): Promise<User> {
   return UserService.create(admin);
 }
 
+export async function setTestUsers(): Promise<User[]> {
+  const users: IUser[] = getTestUsers();
+
+  await Promise.all(users.map((user) => this.hashPassword('test')));
+
+  return Promise.all(
+    users.map((user) => UserService.create(user)),
+  );
+}
+
 export async function setStations(): Promise<Station[]> {
   const isStationsExist = await StationService.getAll();
 
   if (isStationsExist.length) {
     return Promise.resolve([]);
   }
-
-  const stations: IStation[] = [{
-    name: 'Omskaiy Station',
-    UNM: 666666,
-    description: 'Just station',
-    stationClass: StationClass.PASSENGER_STATION,
-    stations: [],
-    workingPlaces: [],
-  }, {
-    name: 'Novosibirskaya Station',
-    UNM: 777777,
-    description: 'Just station',
-    stationClass: StationClass.PASSENGER_STATION,
-    stations: [],
-    workingPlaces: [],
-  }, {
-    name: 'Tomskaiy Station',
-    UNM: 555555,
-    description: 'Just station',
-    stationClass: StationClass.PASSENGER_STATION,
-    stations: [],
-    workingPlaces: [],
-  }];
 
   return Promise.all(
     stations.map((station) => StationService.create(station)),

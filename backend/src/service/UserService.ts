@@ -32,6 +32,16 @@ export default {
 
     return repository.findOne({ where: { login } });
   },
+  async searchUser({ str }) {
+    const repository: Repository<User> = getRepository(User);
+
+    return repository.createQueryBuilder('user')
+      .where('user.login ILIKE :login', { login: `%${str}%` })
+      .orWhere('user.firstName ILIKE :firstName', { firstName: `%${str}%` })
+      .orWhere('user.lastName ILIKE :lastName', { lastName: `%${str}%` })
+      .orWhere('user.patronymicName ILIKE :patronymicName', { patronymicName: `%${str}%` })
+      .getMany();
+  },
   getSimilarUser(user: IUser): Promise<User[]> {
     const repository: Repository<User> = getRepository(User);
 

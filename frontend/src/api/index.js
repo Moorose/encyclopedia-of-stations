@@ -18,8 +18,13 @@ export const UserApi = {
   getById(userId) {
     return axios.get(`${API}/user/${userId}`);
   },
+  getByString(str) {
+    return axios.get(`${API}/user/string/${str}`);
+  },
   getSimilarUser(param) {
-    return axios.get(`${API}/user/${param}`);
+    return axios.get(`${API}/user/query`, {
+      params: { ...param },
+    });
   },
   create(user) {
     return axios.post(`${API}/user`, user);

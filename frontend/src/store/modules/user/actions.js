@@ -26,7 +26,7 @@ const actions = {
       });
   },
   searchUsersByString({ commit }, str) {
-    return UserApi.getSimilarUser(str)
+    return UserApi.getByString(str)
       .then(({ data }) => data, () => {
       });
   },
