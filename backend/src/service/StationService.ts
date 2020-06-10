@@ -12,13 +12,13 @@ export default {
   getByUNM({ UNM }): Promise<Station> {
     const repository: Repository<Station> = getRepository(Station);
 
-    return repository.findOne({ where: { UNM: UNM } },);
+    return repository.findOne({ where: { UNM } });
   },
   getByName({ name }): Promise<Station[]> {
     const repository: Repository<Station> = getRepository(Station);
 
-    return repository.createQueryBuilder("station")
-      .where('name ILIKE :name', { name: `%${ name }%` })
+    return repository.createQueryBuilder('station')
+      .where('name ILIKE :name', { name: `%${name}%` })
       .getMany();
   },
   getAll(): Promise<Station[]> {

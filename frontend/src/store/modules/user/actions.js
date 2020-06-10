@@ -25,6 +25,11 @@ const actions = {
       }, () => {
       });
   },
+  searchUsersByString({ commit }, str) {
+    return UserApi.getSimilarUser(str)
+      .then(({ data }) => data, () => {
+      });
+  },
 };
 
 export default actions;

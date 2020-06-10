@@ -1,8 +1,8 @@
+import * as Boom from '@hapi/boom';
 import StationController from './controller/StationController';
 import UserController from './controller/UserController';
 import WorkingPlaceController from './controller/WorkingPlaceController';
-import * as Boom from '@hapi/boom';
-import { authUser, logout } from "./helper";
+import { authUser, logout } from './helper';
 
 
 const users = [
@@ -23,7 +23,7 @@ export default [
     handler: authUser,
     options: {
       auth: {
-        mode: 'try'
+        mode: 'try',
       },
     },
   },
@@ -37,7 +37,8 @@ export default [
     method: 'GET',
     path: '/station/{stationId}',
     handler: StationController.getById,
-  },{
+  },
+  {
     method: 'GET',
     path: '/station/unm/{UNM}',
     handler: StationController.getByUNM,

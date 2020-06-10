@@ -1,7 +1,7 @@
-import { WorkingPlace } from "../entity/WorkingPlace";
-import { Station } from "../entity/Station";
+import { WorkingPlace } from '../entity/WorkingPlace';
+import { Station } from '../entity/Station';
 import { UserRole } from '../enum/UserRole';
-import { StationClass } from "../enum/StationClass";
+import { StationClass } from '../enum/StationClass';
 
 export interface IUser {
   id?: string;
@@ -10,6 +10,7 @@ export interface IUser {
   lastName: string;
   patronymicName: string;
   password?: string;
+  position: string;
   role: UserRole;
 }
 

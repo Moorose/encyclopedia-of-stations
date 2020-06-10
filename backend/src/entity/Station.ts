@@ -4,7 +4,7 @@ import {
 } from 'typeorm';
 import { IStation } from '../interface';
 import { WorkingPlace } from './WorkingPlace';
-import { StationClass } from "../enum/StationClass";
+import { StationClass } from '../enum/StationClass';
 
 @Entity()
 export class Station {

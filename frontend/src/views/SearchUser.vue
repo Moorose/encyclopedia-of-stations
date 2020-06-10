@@ -2,29 +2,34 @@
   <div class="wrapper">
     <div class="search-bar">
       <span class="header">
-      Введите название станции
+        Поиск пользователя
       </span>
       <input
         v-model="searchValue"
-        @change="searchStations"
+        @change="searchUsers"
         type="text"
         :placeholder="placeholder"
         class="field"
       >
     </div>
     <div class="table">
-      <div class="header cell id">ID</div>
-      <div class="header cell station">Наименование станции</div>
-      <div class="header cell unm">ЕСР</div>
-      <template v-for="station in stations">
-        <router-link :key="`id${station.id}`" :to="`/station/${station.id}`">
-          <div class="data cell id">{{station.id}}</div>
+      <div class="header cell">ID</div>
+      <div class="header cell">ФИО</div>
+      <div class="header cell">Login</div>
+      <div class="header cell">Должность</div>
+      <div class="header cell">Роль</div>
+      <template v-for="user in users">
+        <router-link :key="`id${user.id}`" :to="`/user/${user.id}`">
+          <div class="data cell">{{user.id}}</div>
         </router-link>
-        <router-link :key="`name${station.id}`" :to="`/station/${station.id}`">
-          <div class="data cell station">{{station.name}}</div>
+        <router-link :key="`name${user.id}`" :to="`/user/${user.id}`">
+          <div class="data cell">{{username(user)}}</div>
         </router-link>
-        <router-link :key="`UNM${station.id}`" :to="`/station/${station.id}`">
-          <div class="data cell unm">{{station.UNM}}</div>
+        <router-link :key="`name${user.id}`" :to="`/user/${user.id}`">
+          <div class="data cell">{{user.login}}</div>
+        </router-link>
+        <router-link :key="`name${user.id}`" :to="`/user/${user.id}`">
+          <div class="data cell">{{user.login}}</div>
         </router-link>
       </template>
     </div>
@@ -35,26 +40,32 @@
   import { mapActions } from 'vuex';
 
   export default {
-    name: 'SearchStation',
+    name: 'SearchUser',
     data() {
       return {
-        placeholder: 'Поиск станции по вашему названию...',
+        placeholder: 'Введите данные пользователя...',
         searchValue: '',
-        stations: [],
+        users: [],
       };
     },
     methods: {
-      ...mapActions('stations', ['searchStationsByName']),
-      async searchStations() {
+      ...mapActions('user', ['searchUsersByString']),
+      async searchUsers() {
         const { searchValue } = this;
 
         if (!searchValue) {
           return;
         }
 
-        const stations = await this.searchStationsByName(searchValue);
+        const users = await this.searchUsersByString(searchValue);
 
-        this.stations = stations;
+        console.log(users);
+        this.users = users;
+      },
+    },
+    computed: {
+      username() {
+        return (user) => `${user.firstName} ${user.lastName} ${user.patronymicName}`;
       },
     },
   };
@@ -103,13 +114,6 @@
         &.id
           border-right: 2px solid $blossom-color
 
-        &.station
-          padding-left: base-unit(30)
-          justify-content: flex-start
-
-        &.unm
-          border-left: 2px solid $blossom-color
-
       .header
         background-color: $dust-storm-color
         border-top: 2px solid $blossom-color
@@ -117,5 +121,4 @@
 
       .data
         font-size: base-unit(24)
-
 </style>

@@ -4,4 +4,4 @@ export enum StationClass {
   MARSHALLING_STATION,
   FREIGHT_STATION,
   PASSENGER_STATION,
-};
+}

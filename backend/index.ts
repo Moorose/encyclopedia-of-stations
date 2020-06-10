@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import { server } from '@hapi/hapi';
-import AuthPlugin from './src/auth';
 import { createConnection } from 'typeorm';
+import AuthPlugin from './src/auth';
 import routes from './src/routes';
 import { setAdmin, setStations } from './src/helper';
 import 'reflect-metadata';
@@ -19,12 +19,12 @@ const init = async () => {
     },
     routes: {
       cors: {
-        origin: ["*"],
+        origin: ['*'],
         credentials: true,
-        headers: ["Accept", "Content-Type", 'Access-Control-Allow-Credentials'],
-        additionalHeaders: ["X-Requested-With"]
-      }
-    }
+        headers: ['Accept', 'Content-Type', 'Access-Control-Allow-Credentials'],
+        additionalHeaders: ['X-Requested-With'],
+      },
+    },
   });
 
   await app.register(AuthPlugin);
@@ -37,7 +37,7 @@ const init = async () => {
   await app.start();
 
   // eslint-disable-next-line no-console
-  console.log(`Server running on ${ app.info.uri }`);
+  console.log(`Server running on ${app.info.uri}`);
 };
 
 process.on('unhandledRejection', (err) => {

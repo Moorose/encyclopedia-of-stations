@@ -1,0 +1,24 @@
+{
+  "name": "encyclopedia-of-stations",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --quiet --fix --ext .js,.ts,.vue .",
+    "lint:frontend": "eslint --quiet --fix --ext .js,.vue ./frontend",
+    "lint:backend": "eslint --quiet --fix --ext .js,.ts ./backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moorose/encyclopedia-of-stations.git"
+  },
+  "author": "Eugene",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Moorose/encyclopedia-of-stations/issues"
+  },
+  "homepage": "https://github.com/Moorose/encyclopedia-of-stations#readme",
+  "dependencies": {
+    "eslint": "^7.2.0"
+  }
+}

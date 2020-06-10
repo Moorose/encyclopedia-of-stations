@@ -41,6 +41,7 @@ module.exports = {
     'vue/script-indent': ['error', 2, { baseIndent: 1 }],
     indent: ['error', 2],
     'import/prefer-default-export': 'off',
+    'import/no-unresolved': 'off',
     'operator-linebreak': 'off',
     'vue/no-parsing-error': 'off',
     'vue/valid-v-if': 'off',

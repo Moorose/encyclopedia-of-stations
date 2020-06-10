@@ -2,20 +2,20 @@
   <div class="wrapper">
     <div class="container">
       <div class="menu" v-for="option in menuOptions" :key=option.id>
-        <div v-if="option.isAllowed" class="button">
-          <router-link :to="option.to">
+        <router-link v-if="option.isAllowed" :to="option.to" class="button">
+          <div>
             <div>{{ option.name }}</div>
-          </router-link>
+          </div>
           <div v-if="option.subOptions" class="sub-wrapper">
-            <div class="dropdown" v-for="subOption in option.subOptions" :key='subOption.id'>
-              <router-link :to="subOption.to" class="link">
+            <router-link :to="subOption.to" class="dropdown" v-for="subOption in option.subOptions" :key='subOption.id'>
+              <div class="link">
                 <div class="sub-option">
                   {{ subOption.name }}
                 </div>
-              </router-link>
-            </div>
+              </div>
+            </router-link>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@
                 id: 5,
                 name: 'Поиск пользователя',
                 isAllowed: true,
-                to: '/',
+                to: '/user',
               },
               {
                 id: 6,

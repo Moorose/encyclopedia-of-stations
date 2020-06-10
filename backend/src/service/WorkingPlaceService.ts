@@ -1,6 +1,6 @@
-import { Station } from './../entity/Station';
-import { IWorkingPlace } from './../interface/index';
-import { WorkingPlace } from './../entity/WorkingPlace'
+import { Station } from '../entity/Station';
+import { IWorkingPlace } from '../interface/index';
+import { WorkingPlace } from '../entity/WorkingPlace';
 
 export default {
   // getAll({ stationId: number }): WorkingPlace[] {

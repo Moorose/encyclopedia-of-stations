@@ -1,7 +1,7 @@
 import { getRepository, Repository, Like } from 'typeorm';
 import { User } from '../entity/User';
 import { IUser } from '../interface';
-import { hashPassword } from '../helper'
+import { hashPassword } from '../helper';
 
 export default {
   async create(user: IUser): Promise<User> {
@@ -16,11 +16,11 @@ export default {
     return repository.find();
   },
   getMe(credentials: IUser): Promise<IUser> {
-    const user: IUser = {...credentials}
+    const user: IUser = { ...credentials };
 
-    delete user.password
+    delete user.password;
 
-    return Promise.resolve(user)
+    return Promise.resolve(user);
   },
   getById({ userId }): Promise<User> {
     const repository: Repository<User> = getRepository(User);
@@ -37,9 +37,10 @@ export default {
 
     const conditions = Object.entries(user).map(([key, value]) => {
       if (typeof value === 'number') {
-        return { [key]: value }
+        return { [key]: value };
       }
-      return { [key]: Like(`%${value}%`) }
+
+      return { [key]: Like(`%${value}%`) };
     });
 
     return repository.find({ where: conditions });
@@ -53,6 +54,7 @@ export default {
     userToUpdate.lastName = user.lastName;
     userToUpdate.patronymicName = user.patronymicName;
     userToUpdate.password = await hashPassword(user.password);
+    userToUpdate.position = user.position;
     userToUpdate.role = user.role;
 
     return repository.save(userToUpdate);

@@ -24,6 +24,9 @@ export class User {
   password: string;
 
   @Column()
+  position: string;
+
+  @Column()
   role: UserRole;
 
   public constructor(data: IUser) {
@@ -33,6 +36,7 @@ export class User {
       this.lastName = data.lastName;
       this.patronymicName = data.patronymicName;
       this.password = data.password;
+      this.position = data.position;
       this.role = data.role;
     }
   }
