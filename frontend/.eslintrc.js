@@ -46,6 +46,7 @@ module.exports = {
     'vue/valid-v-if': 'off',
     'no-param-reassign': 'off',
     'arrow-body-style': 'off',
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_|commit|state' }],
     'no-shadow': ['error',
       {
         builtinGlobals: false,

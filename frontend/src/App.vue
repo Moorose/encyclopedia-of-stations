@@ -11,7 +11,6 @@
         class="workspace"
       />
       <Auth v-else/>
-      <div class="stub">text</div>
     </div>
   </div>
 </template>
@@ -39,11 +38,6 @@
 </script>
 
 <style lang="sass">
-  .stub
-    height: 100px
-    width: 100px
-    background-color: black
-
   a
     color: inherit
     text-decoration: none

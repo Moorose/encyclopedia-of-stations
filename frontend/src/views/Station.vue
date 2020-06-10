@@ -1,74 +1,92 @@
 <template>
-  <div class="wrapper">
-  <div class="header">
-    <div class="name">{{station.name}}</div>
-  </div>
-  <div class="content">
-    <div class="description">
-      <div class="name">Описание станции</div>
-      <div>{{station.description}}</div>
-      </div>
-    <div class="code">
-        <div class="name">UNM:</div>
-        <div>{{station.UNM}}</div>
-      </div>
-    <div class="working-place">
-      <div class="name">Рабочие места</div>
-      <div
-        v-for="place in station.workingPlace"
-        :key="place" class="place">{{place}}</div>
-    </div>
-    <div class="child-station">
-      <div class="name">Станции попутного следования</div>
-      <div
-        v-for="station in station.stations"
-        :key="station" class="station">{{station}}</div>
-    </div>
-  </div>
+  <div class="wrapper" v-if="station">
+    <CollapsibleContent
+      name="stationDescription"
+      :collapsed="stationDescriptionCollapsed"
+      @contentCollapsed="onContentCollapsed"
+    >
+      <template #header>
+          Описание станци "{{ station.name }}"
+      </template>
+      <template #main>
+        <StationDescription
+          :station="station"
+        />
+      </template>
+    </CollapsibleContent>
+    <CollapsibleContent
+      name="passingStations"
+      :collapsed="passingStationsCollapsed"
+      @contentCollapsed="onContentCollapsed"
+    >
+      <template #header>
+          Станции попутного следования
+      </template>
+      <template #main>
+        <PassingStations :station="station"/>
+      </template>
+    </CollapsibleContent>
+    <CollapsibleContent
+      name="workPlaces"
+      :collapsed="workPlacesCollapsed"
+      @contentCollapsed="onContentCollapsed"
+    >
+      <template #header>
+          Рабочие места
+      </template>
+      <template #main>
+        <WorkPlaces :station="station" />
+      </template>
+    </CollapsibleContent>
   </div>
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+  import CollapsibleContent from '@/components/CollapsibleContent';
+  import StationDescription from '@/components/stationPath/StationDescription';
+  import PassingStations from '@/components/stationPath/PassingStations';
+  import WorkPlaces from '@/components/stationPath/WorkPlaces';
+
   export default {
     name: 'Station',
+    components: {
+      CollapsibleContent,
+      StationDescription,
+      PassingStations,
+      WorkPlaces,
+    },
+    async created() {
+      this.station = await this.getStationsById(this.$route.params.id);
+    },
     data() {
       return {
-        station: {
-          id: 10,
-          name: 'Omskaya',
-          description: 'Some description',
-          UNM: '1561526156254',
-          workingPlaces: [1, 2, 3],
-          stations: [1, 2],
-        },
+        stationDescriptionCollapsed: false,
+        passingStationsCollapsed: true,
+        workPlacesCollapsed: true,
+        station: null,
       };
+    },
+    methods: {
+      ...mapActions('stations', ['getStationsById']),
+      onContentCollapsed(name) {
+        console.log(name);
+        if (name === 'stationDescription') {
+          this.stationDescriptionCollapsed = !this.stationDescriptionCollapsed;
+        }
+        if (name === 'passingStations') {
+          this.passingStationsCollapsed = !this.passingStationsCollapsed;
+        }
+        if (name === 'workPlaces') {
+          this.workPlacesCollapsed = !this.workPlacesCollapsed;
+        }
+      },
     },
   };
 </script>
 
 <style lang="sass" scoped>
-.wrapper
-  font-size: base-unit(14)
-
-  .header
+  .wrapper
     display: flex
-    font-size: base-unit(18)
-
-  .content
-    display: flex
-
-    .description
-      display: flex
-
-    .code
-      display: flex
-
-    .working-place
-      display: flex
-
-    .child-station
-      display: flex
-
-  .name
-    font-size: base-unit(16)
+    flex-direction: column
 </style>
