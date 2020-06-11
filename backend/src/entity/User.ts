@@ -20,7 +20,7 @@ export class User {
   @Column({ length: 50 })
   patronymicName: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column()

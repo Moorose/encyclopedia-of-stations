@@ -89,12 +89,6 @@
     components: {
       Button: () => import('@/components/Button.vue'),
     },
-    props: {
-      station: {
-        type: Object,
-        required: true,
-      },
-    },
     data() {
       return {
         buttonText: 'Создать',
@@ -186,5 +180,4 @@
       font-size: base-unit(24)
       width: base-unit(260)
       height: base-unit(50)
-
 </style>

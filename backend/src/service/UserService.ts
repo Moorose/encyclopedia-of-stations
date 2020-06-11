@@ -18,6 +18,9 @@ export default {
   getMe(credentials: IUser): Promise<IUser> {
     const user: IUser = { ...credentials };
 
+    console.log('getMe');
+    console.log(user);
+
     delete user.password;
 
     return Promise.resolve(user);
@@ -28,9 +31,11 @@ export default {
     return repository.findOne(userId);
   },
   getByLogin(login): Promise<User> {
-    const repository: Repository<User> = getRepository(User);
-
-    return repository.findOne({ where: { login } });
+    return getRepository(User)
+      .createQueryBuilder()
+      .addSelect('user.password')
+      .where('user.login = :login', { login })
+      .getOne();
   },
   async searchUser({ str }) {
     const repository: Repository<User> = getRepository(User);
@@ -59,15 +64,25 @@ export default {
     const repository: Repository<User> = getRepository(User);
     const userToUpdate: User = await repository.findOne(user.id);
 
-    userToUpdate.login = user.login;
     userToUpdate.firstName = user.firstName;
     userToUpdate.lastName = user.lastName;
     userToUpdate.patronymicName = user.patronymicName;
-    userToUpdate.password = await hashPassword(user.password);
-    userToUpdate.position = user.position;
-    userToUpdate.role = user.role;
 
-    return repository.save(userToUpdate);
+    if (user.password) {
+      userToUpdate.password = await hashPassword(user.password);
+    }
+    if (user.position) {
+      userToUpdate.position = user.position;
+    }
+    if (user.role) {
+      userToUpdate.role = user.role;
+    }
+
+    const updatedUser: User = await repository.save(userToUpdate);
+
+    delete updatedUser.password;
+
+    return updatedUser;
   },
   async delete({ userId }): Promise<void> {
     const repository: Repository<User> = getRepository(User);

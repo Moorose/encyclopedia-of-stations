@@ -22,13 +22,38 @@ const actions = {
         commit('setLoggedIn', true);
 
         return data;
-      }, () => {
+      },
+      (err) => {
+        console.log(err);
       });
+  },
+  getUserById({ commit }, id) {
+    return UserApi.getById(id)
+      .then(({ data }) => data,
+        (err) => {
+          console.log(err);
+        });
+  },
+  updateUser({ commit }, user) {
+    return UserApi.update(user)
+      .then(({ data }) => data,
+        (err) => {
+          console.log(err);
+        });
+  },
+  createUser({ commit }, user) {
+    return UserApi.create(user)
+      .then(({ data }) => data,
+        (err) => {
+          console.log(err);
+        });
   },
   searchUsersByString({ commit }, str) {
     return UserApi.getByString(str)
-      .then(({ data }) => data, () => {
-      });
+      .then(({ data }) => data,
+        (err) => {
+          console.log(err);
+        });
   },
 };
 
