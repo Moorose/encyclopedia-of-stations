@@ -1,4 +1,4 @@
-import { UserApi } from '@/api';
+import { UserApi } from '@/modules/api';
 
 const actions = {
   loginAction({ commit }, { login, password }) {
@@ -42,11 +42,7 @@ const actions = {
         });
   },
   createUser({ commit }, user) {
-    return UserApi.create(user)
-      .then(({ data }) => data,
-        (err) => {
-          console.log(err);
-        });
+    return UserApi.create(user);
   },
   searchUsersByString({ commit }, str) {
     return UserApi.getByString(str)

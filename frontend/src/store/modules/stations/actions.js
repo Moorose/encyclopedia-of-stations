@@ -1,4 +1,4 @@
-import { StationApi } from '@/api';
+import { StationApi } from '@/modules/api';
 
 
 const actions = {

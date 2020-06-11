@@ -17,6 +17,7 @@
             {{user.role}}
           </div>
         </div>
+        <div v-if="editProcess && getError(0)" class="error">{{ getError(0).message }}</div>
         <div class="name">{{placeholder.firstName}}:</div>
         <div class="cell">
           <div v-if="!editProcess" class="content text">
@@ -31,7 +32,7 @@
             >
           </div>
         </div>
-        <div v-if="editProcess && getError(0)" class="error">{{ getError(0).message }}</div>
+        <div v-if="editProcess && getError(1)" class="error">{{ getError(1).message }}</div>
         <div class="name">{{placeholder.lastName}}:</div>
         <div class="cell">
           <div v-if="!editProcess" class="content text">
@@ -46,7 +47,7 @@
             >
           </div>
         </div>
-        <div v-if="editProcess && getError(1)" class="error">{{ getError(1).message }}</div>
+        <div v-if="editProcess && getError(2)" class="error">{{ getError(2).message }}</div>
         <div class="name">{{placeholder.patronymicName}}:</div>
         <div class="cell">
           <div v-if="!editProcess" class="content text">
@@ -61,7 +62,7 @@
             >
           </div>
         </div>
-        <div v-if="editProcess && getError(2)" class="error">{{ getError(2).message }}</div>
+        <div v-if="editProcess && getError(3)" class="error">{{ getError(3).message }}</div>
         <div class="name">{{placeholder.position}}:</div>
         <div class="cell">
           <div v-if="!editProcess" class="content text">
@@ -105,7 +106,7 @@
               >
             </div>
           </div>
-          <div v-if="getError(3)" class="error">{{ getError(3).message }}</div>
+          <div v-if="getError(4)" class="error">{{ getError(4).message }}</div>
         </div>
         <div class="menu">
           <Button class="button" :text="buttonPasswordText" @click="editPassword"/>
@@ -242,10 +243,16 @@
             message: 'Неверное отчество',
           });
         }
+        if (!this.validateString(user.position)) {
+          this.errors.push({
+            id: 3,
+            message: 'Неверная должность',
+          });
+        }
 
         if (this.editPasswordProcess && !this.validatePassword(user)) {
           this.errors.push({
-            id: 3,
+            id: 4,
             message: 'Пароль введен неправильно',
           });
         }
@@ -313,7 +320,7 @@
 
         .error
           padding-left: base-unit(12)
-          font-size: base-unit(15)
+          font-size: base-unit(18)
           color: $red-color
           grid-column: 2 / 3
           align-self: flex-start
