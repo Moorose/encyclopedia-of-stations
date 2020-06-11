@@ -194,6 +194,9 @@
           }
         }
         this.editProcess = !this.editProcess;
+        if (!this.editProcess) {
+          this.editPasswordProcess = false;
+        }
       },
       setUser(user) {
         const payload = { ...user };

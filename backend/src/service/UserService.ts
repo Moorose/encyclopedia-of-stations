@@ -32,7 +32,14 @@ export default {
   },
   getByLogin(login): Promise<User> {
     return getRepository(User)
-      .createQueryBuilder()
+      .createQueryBuilder('user')
+      .select('user.id')
+      .addSelect('user.login')
+      .addSelect('user.firstName')
+      .addSelect('user.lastName')
+      .addSelect('user.patronymicName')
+      .addSelect('user.position')
+      .addSelect('user.role')
       .addSelect('user.password')
       .where('user.login = :login', { login })
       .getOne();
