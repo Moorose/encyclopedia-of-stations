@@ -24,21 +24,21 @@ const actions = {
         return data;
       },
       (err) => {
-        console.log(err);
+        console.log(err.response.data.message);
       });
   },
   getUserById({ commit }, id) {
     return UserApi.getById(id)
       .then(({ data }) => data,
         (err) => {
-          console.log(err);
+          console.log(err.response.data.message);
         });
   },
   updateUser({ commit }, user) {
     return UserApi.update(user)
       .then(({ data }) => data,
         (err) => {
-          console.log(err);
+          console.log(err.response.data.message);
         });
   },
   createUser({ commit }, user) {
@@ -48,7 +48,7 @@ const actions = {
     return UserApi.getByString(str)
       .then(({ data }) => data,
         (err) => {
-          console.log(err);
+          console.log(err.response.data.message);
         });
   },
 };

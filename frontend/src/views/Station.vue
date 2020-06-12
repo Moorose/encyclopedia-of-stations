@@ -70,7 +70,6 @@
     methods: {
       ...mapActions('stations', ['getStationsById']),
       onContentCollapsed(name) {
-        console.log(name);
         if (name === 'stationDescription') {
           this.stationDescriptionCollapsed = !this.stationDescriptionCollapsed;
         }

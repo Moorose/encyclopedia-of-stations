@@ -134,12 +134,9 @@
         const { user, setUser } = this;
 
         if (this.validateForm(user)) {
-          console.log(JSON.stringify(user, null, 2));
-          console.log(JSON.stringify(setUser(user), null, 2));
           this.createUser(setUser(user))
             .then(({ data }) => {
               this.$router.push({ name: 'Profile', params: { id: data.id } });
-              console.log(JSON.stringify(data, null, 2));
             })
             .catch(({ response }) => {
               const { error, message, statusCode } = response.data;
