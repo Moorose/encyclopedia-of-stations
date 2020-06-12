@@ -20,8 +20,11 @@ export class User {
   @Column({ length: 50 })
   patronymicName: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
+
+  @Column()
+  position: string;
 
   @Column()
   role: UserRole;
@@ -33,6 +36,7 @@ export class User {
       this.lastName = data.lastName;
       this.patronymicName = data.patronymicName;
       this.password = data.password;
+      this.position = data.position;
       this.role = data.role;
     }
   }

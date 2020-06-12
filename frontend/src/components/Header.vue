@@ -1,64 +1,66 @@
 <template>
-  <div class="container">
-    <div class="left">
-      <router-link to="/">
-        <div class="logo">
-          <span v-t="'header.logo'"/>
+  <div class="wrapper">
+    <div class="container">
+      <div class="app-name">
+        Энциклопедия станций
+      </div>
+      <div v-if="loggedIn" class="auth-menu">
+        <div v-if="user" class="user">
+          <router-link to="/profile">
+            {{ username }}
+          </router-link>
         </div>
-        <div class="name">
-          <span v-t="'header.appName'"/>
+        <div @click="logout" class="exit">
+          Выход
         </div>
-      </router-link>
-    </div>
-    <div class="right">
-      <div v-if="auth" class="login">
-        <span v-t="'header.logout'"/>
-      </div>
-      <div v-else class="login">
-        <span v-t="'header.login'"/>
-      </div>
-      <div class="search">
-        <router-link to="/search">
-          <span v-t="'header.search'"/>
-        </router-link>
-      </div>
-      <div class="profile">
-        <router-link to="/profile">
-          <span v-t="'header.profile'"/>
-        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapActions, mapState } from 'vuex';
+
   export default {
     name: 'Header',
-    data() {
-      return {
-        auth: true,
-      };
+    computed: {
+      ...mapState('user', ['loggedIn', 'user']),
+      username() {
+        const { user } = this;
+
+        return `${user.firstName} ${user.lastName} ${user.patronymicName}`;
+      },
+    },
+    methods: {
+      ...mapActions('user', ['logout']),
     },
   };
 </script>
 
 <style lang="sass" scoped>
-  .container
+  .wrapper
+    border-bottom: 2px solid $blossom-color
+    width: 100%
     display: flex
-    justify-content: space-between
-    align-items: center
-    height: base-unit($header-height)
+    justify-content: center
 
-    .left
+    .container
       display: flex
+      justify-content: space-between
+      align-items: center
+      height: $header-height
+      width: $workspace-width
+      padding: 0 base-unit(40)
 
-      .logo
-        background-color: $alizarin-crimson-color
+      .app-name
+        font-size: base-unit(36)
 
-      .name
-        fon
+      .auth-menu
+        display: flex
+        align-items: center
+        font-size: base-unit(24)
 
-    .right
-      display: flex
+        .exit
+          margin-left: base-unit(65)
 
 </style>

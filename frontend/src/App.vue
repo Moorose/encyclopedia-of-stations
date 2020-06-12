@@ -1,41 +1,82 @@
 <template>
   <div id="app">
-    <Header/>
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-      |
-      <router-link to="/about">About</router-link>
+    <div class="app-main-wrapper">
+      <header class="app-menu">
+        <Header/>
+        <SubHeader v-if="loggedIn"/>
+      </header>
+      <router-view
+        v-if="loggedIn"
+        :key="$route.path"
+        class="workspace"
+      />
+      <Auth v-else/>
     </div>
-    <router-view/>
-    <Footer/>
   </div>
 </template>
 
 <script>
+  import { mapActions, mapState } from 'vuex';
+
   export default {
     name: 'App',
     components: {
       Header: () => import('@/components/Header.vue'),
-      Footer: () => import('@/components/Footer.vue'),
+      SubHeader: () => import('@/components/SubHeader.vue'),
+      Auth: () => import('@/views/Auth.vue'),
+    },
+    async created() {
+      await this.getUserInfo();
+    },
+    computed: {
+      ...mapState('user', ['loggedIn']),
+    },
+    methods: {
+      ...mapActions('user', ['getUserInfo']),
     },
   };
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
+  a
+    color: inherit
+    text-decoration: none
+
+    a:link
+      text-decoration: none
+
+    a:visited
+      text-decoration: none
+
+    a:active
+      text-decoration: none
+
+    a:hover
+      text-decoration: none
+
   #app
     font-family: Avenir, Helvetica, Arial, sans-serif
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
     text-align: center
-    color: #2c3e50
+    color: $pickled-bluewood-color
 
-  #nav
-    padding: 30px
+    .app-main-wrapper
+      display: flex
+      flex-direction: column
+      align-items: center
+      position: relative
 
-    a
-      font-weight: bold
-      color: #2c3e50
+      .app-menu
+        position: sticky
+        top: 0
+        width: 100%
+        z-index: $header-z-index
+        display: flex
+        flex-direction: column
+        align-items: center
+        background-color: $soft-peach-color
 
-      &.router-link-exact-active
-        color: #42b983
+    .workspace
+      width: $workspace-width
 </style>

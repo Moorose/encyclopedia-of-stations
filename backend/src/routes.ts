@@ -1,8 +1,8 @@
+import * as Boom from '@hapi/boom';
 import StationController from './controller/StationController';
 import UserController from './controller/UserController';
 import WorkingPlaceController from './controller/WorkingPlaceController';
-import * as Boom from '@hapi/boom';
-import { authUser, logout } from "./helper";
+import { authUser, logout } from './helper';
 
 
 const users = [
@@ -11,14 +11,19 @@ const users = [
 ];
 
 export default [
-  // auth test
+  // auth
+  {
+    method: 'get',
+    path: '/me',
+    handler: UserController.getMe,
+  },
   {
     method: 'POST',
     path: '/login',
     handler: authUser,
     options: {
       auth: {
-        mode: 'try'
+        mode: 'try',
       },
     },
   },
@@ -32,6 +37,16 @@ export default [
     method: 'GET',
     path: '/station/{stationId}',
     handler: StationController.getById,
+  },
+  {
+    method: 'GET',
+    path: '/station/unm/{UNM}',
+    handler: StationController.getByUNM,
+  },
+  {
+    method: 'GET',
+    path: '/station/name/{name}',
+    handler: StationController.getByName,
   },
   {
     method: 'GET',
@@ -87,8 +102,13 @@ export default [
   },
   {
     method: 'GET',
-    path: '/user',
-    handler: UserController.get,
+    path: '/user/string/{str}',
+    handler: UserController.getByString,
+  },
+  {
+    method: 'GET',
+    path: '/user/query{query}',
+    handler: UserController.getWithQuery,
   },
   {
     method: 'POST',

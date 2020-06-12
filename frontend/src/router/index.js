@@ -1,45 +1,18 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
-  },
-  {
-    path: '/map',
-    name: 'Map',
-    component: () => import('../views/Map.vue'),
-  },
-  {
-    path: '/search-station',
-    name: 'SearchStation',
-    component: () => import('../views/SearchStation.vue'),
-  },
-  {
-    path: '/add-search',
-    name: 'AddStation',
-    component: () => import('../views/AddStation.vue'),
-  },
-  {
-    path: '/station',
-    name: 'Station',
-    component: () => import('../views/Station.vue'),
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: () => import('../views/Profile.vue'),
-  },
+  { path: '/', component: () => import('@/views/SearchStation.vue'), name: 'SearchStation' },
+  { path: '/about', component: () => import('@/views/About.vue'), name: 'About' },
+  { path: '/map', component: () => import('@/views/Map.vue'), name: 'Map' },
+  { path: '/station/add', component: () => import('@/views/AddStation.vue'), name: 'AddStation' },
+  { path: '/station/:id', component: () => import('@/views/Station.vue'), name: 'Station' },
+  { path: '/user', component: () => import('@/views/SearchUser.vue'), name: 'SearchUser' },
+  { path: '/user/create', component: () => import('@/views/AddUser.vue'), name: 'AddUser' },
+  { path: '/user/:id', component: () => import('@/views/Profile.vue'), name: 'Profile' },
+  { path: '/profile', component: () => import('@/views/Profile.vue'), name: 'MyProfile' },
 ];
 
 const router = new VueRouter({

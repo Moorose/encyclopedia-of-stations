@@ -19,7 +19,7 @@ async function register(server) {
       path: '/',
     },
     validateFunc: async (request, session) => {
-      const account = await UserService.getById(session.id)
+      const account = await UserService.getById({ userId: session.id });
 
       if (!account) {
         return { valid: false };

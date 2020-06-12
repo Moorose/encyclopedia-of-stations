@@ -4,25 +4,27 @@ import {
 } from 'typeorm';
 import { IStation } from '../interface';
 import { WorkingPlace } from './WorkingPlace';
+import { StationClass } from '../enum/StationClass';
 
 @Entity()
 export class Station {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  name: string;
+
   @Column('text')
   description: string;
 
-  @Column({
-    length: 10,
-  })
-  UNM: string; // The unified network marking
+  @Column({ unique: true })
+  UNM: number; // The unified network marking
+
+  @Column()
+  stationClass: StationClass;
 
   @OneToMany((type) => WorkingPlace, (workingPlace) => workingPlace.station)
   workingPlaces: WorkingPlace[];
-
-  @Column()
-  theNextStationId: number;
 
   @ManyToMany((type) => Station, (station) => station.stations)
   @JoinTable()
@@ -30,8 +32,10 @@ export class Station {
 
   public constructor(data: IStation) {
     if (data) {
+      this.name = data.name;
       this.description = data.description;
       this.UNM = data.UNM;
+      this.stationClass = data.stationClass;
       this.workingPlaces = data.workingPlaces;
       this.stations = data.stations;
     }
