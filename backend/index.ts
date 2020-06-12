@@ -5,6 +5,7 @@ import AuthPlugin from './src/auth';
 import routes from './src/routes';
 import { setAdmin, setStations, setTestUsers } from './src/helper';
 import 'reflect-metadata';
+import { preResponse } from './src/intercepter';
 
 config();
 
@@ -30,6 +31,9 @@ const init = async () => {
   await app.register(AuthPlugin);
   app.auth.default('session');
   app.route(routes);
+
+  app.ext('onPreResponse', preResponse);
+
 
   await createConnection();
   await setAdmin();

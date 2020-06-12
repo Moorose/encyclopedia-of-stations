@@ -1,14 +1,31 @@
 import { getRepository, Repository, Like } from 'typeorm';
+import * as Boom from '@hapi/boom';
 import { User } from '../entity/User';
 import { IUser } from '../interface';
 import { hashPassword } from '../helper';
 
 export default {
   async create(user: IUser): Promise<User> {
-    const repository: Repository<User> = getRepository(User);
-    const userToSave: User = new User(user);
+    user.password = await hashPassword(user.password);
 
-    return repository.save(userToSave);
+    const userToSave: User = new User(user);
+    const repository: Repository<User> = getRepository(User);
+
+    try {
+      const savedUser:User = await repository.save(userToSave);
+
+      delete savedUser.password;
+
+      return savedUser;
+    } catch (err) {
+      const { name, severity, code } = err;
+      let { message } = err;
+
+      if (code === '23505') {
+        message = 'Такой login уже существует';
+      }
+      throw Boom.badData(message);
+    }
   },
   getAll(): Promise<User[]> {
     const repository: Repository<User> = getRepository(User);
@@ -17,9 +34,6 @@ export default {
   },
   getMe(credentials: IUser): Promise<IUser> {
     const user: IUser = { ...credentials };
-
-    console.log('getMe');
-    console.log(user);
 
     delete user.password;
 

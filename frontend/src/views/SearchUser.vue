@@ -62,7 +62,6 @@
 
         const users = await this.searchUsersByString(searchValue);
 
-        console.log(users);
         this.users = users;
       },
     },

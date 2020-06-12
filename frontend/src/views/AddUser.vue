@@ -94,7 +94,7 @@
 
 <script>
   import { mapActions } from 'vuex';
-  import { UserRole } from '../modules/UserRole';
+  import { UserRole } from '@/modules/UserRole';
 
   export default {
     name: 'AddUser',
@@ -136,14 +136,22 @@
         if (this.validateForm(user)) {
           console.log(JSON.stringify(user, null, 2));
           console.log(JSON.stringify(setUser(user), null, 2));
-          // this.createUser(setUser(user))
-          //   .then(({ data }) => {
-          //     this.user = data;
-          //     console.log(JSON.stringify(data, null, 2));
-          //   })
-          //   .catch((error) => {
-          //     console.log(JSON.stringify(error, null, 2));
-          //   });
+          this.createUser(setUser(user))
+            .then(({ data }) => {
+              this.$router.push({ name: 'Profile', params: { id: data.id } });
+              console.log(JSON.stringify(data, null, 2));
+            })
+            .catch(({ response }) => {
+              const { error, message, statusCode } = response.data;
+
+              if (statusCode === 422) {
+                this.errors.push({
+                  id: 5,
+                  error,
+                  message,
+                });
+              }
+            });
         }
       },
       setUser(user) {
@@ -215,7 +223,7 @@
   .container
     display: flex
     flex-direction: column
-    align-items: start
+    align-items: flex-start
     padding: base-unit(20) base-unit(50)
 
     .header

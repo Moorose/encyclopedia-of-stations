@@ -1,49 +1,53 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <div class="menu" v-for="option in menuOptions" :key=option.id>
-        <router-link v-if="option.isAllowed" :to="option.to" class="button">
-          <div>
-            <div>{{ option.name }}</div>
-          </div>
-          <div v-if="option.subOptions" class="sub-wrapper">
-            <router-link :to="subOption.to" class="dropdown" v-for="subOption in option.subOptions" :key='subOption.id'>
-              <div class="link">
-                <div class="sub-option">
-                  {{ subOption.name }}
+      <template v-for="option in menuOptions">
+        <div v-if="isAllowed(option)" class="menu" :key=option.id>
+          <router-link :to="option.to" class="button">
+            <div>
+              <div>{{ option.name }}</div>
+            </div>
+            <div v-if="option.subOptions" class="sub-wrapper">
+              <router-link :to="subOption.to" class="dropdown" v-for="subOption in option.subOptions"
+                :key='subOption.id'
+              >
+                <div v-if="isAllowed(subOption)" class="link">
+                  <div class="sub-option">
+                    {{ subOption.name }}
+                  </div>
                 </div>
-              </div>
-            </router-link>
-          </div>
-        </router-link>
-      </div>
+              </router-link>
+            </div>
+          </router-link>
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+  import { UserRole } from '@/modules/UserRole';
+
   export default {
     name: 'SubHeader',
     data() {
       return {
-        isLogged: false,
         menuOptions: [
           {
             id: 1,
             name: 'Станции',
-            isAllowed: true,
             to: '/',
             subOptions: [
               {
                 id: 8,
                 name: 'Поиск станций',
-                isAllowed: true,
                 to: '/',
               },
               {
                 id: 9,
                 name: 'Добавить станцию',
-                isAllowed: true,
+                properRole: UserRole.Editor,
                 to: '/station/add',
               },
             ],
@@ -51,25 +55,24 @@
           {
             id: 2,
             name: 'Карта',
-            isAllowed: true,
             to: '/map',
           },
           {
             id: 3,
             name: 'Пользователи',
-            isAllowed: true,
+            properRole: UserRole.Admin,
             to: '/user',
             subOptions: [
               {
                 id: 5,
                 name: 'Поиск пользователя',
-                isAllowed: true,
+                properRole: UserRole.Admin,
                 to: '/user',
               },
               {
                 id: 6,
-                name: 'Добавить полбзователя',
-                isAllowed: true,
+                name: 'Добавить пользователя',
+                properRole: UserRole.Admin,
                 to: '/user/create',
               },
             ],
@@ -77,11 +80,13 @@
           {
             id: 7,
             name: 'О нас',
-            isAllowed: true,
             to: '/about',
           },
         ],
       };
+    },
+    computed: {
+      ...mapGetters('user', ['isAllowed']),
     },
   };
 </script>

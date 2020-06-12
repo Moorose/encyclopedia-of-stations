@@ -13,8 +13,19 @@
         </div>
         <div class="name">{{placeholder.role}}:</div>
         <div class="cell">
-          <div class="content text">
-            {{user.role}}
+          <div v-if="!editProcess" class="content text">
+            {{userRole}}
+          </div>
+          <div v-else class="content">
+            <select v-model="user.role" class="field">
+              <option disabled value="">{{placeholder.role}}</option>
+              <option
+                v-for="[key, value] in Object.entries(UserRole)"
+                :value="value"
+                :key="key"
+              >{{ key }}
+              </option>
+            </select>
           </div>
         </div>
         <div v-if="editProcess && getError(0)" class="error">{{ getError(0).message }}</div>
@@ -119,7 +130,7 @@
           :text="buttonPasswordText"
           @click="editPassword"
         />
-        <Button class="button" :text="buttonSaveText" @click="saveHandler"/>
+        <Button v-if="isAllowed({ properRole })" class="button" :text="buttonSaveText" @click="saveHandler"/>
         <Button v-if="editProcess" class="button" text="Отмена" @click="resetHandler"/>
       </div>
     </div>
@@ -127,7 +138,8 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex';
+  import { mapActions, mapGetters, mapState } from 'vuex';
+  import { UserRole } from '@/modules/UserRole';
 
   export default {
     name: 'Profile',
@@ -136,6 +148,8 @@
     },
     data() {
       return {
+        UserRole,
+        properRole: UserRole.Admin,
         myProfile: true,
         editProcess: false,
         editPasswordProcess: false,
@@ -167,6 +181,7 @@
       ...mapState('user', {
         currentUser: 'user',
       }),
+      ...mapGetters('user', ['isAllowed']),
       buttonSaveText() {
         return this.editProcess ? 'Сохранить' : 'Редактировать';
       },
@@ -175,6 +190,9 @@
       },
       getError() {
         return (id) => this.errors.find((e) => e.id === id);
+      },
+      userRole() {
+        return Object.keys(UserRole)[this.user.role];
       },
     },
     methods: {
