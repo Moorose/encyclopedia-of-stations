@@ -1,5 +1,5 @@
 <template>
-
+  <div></div>
 </template>
 
 <script>
@@ -19,18 +19,17 @@
         required: true,
       },
     },
-
+    data() {
+      return {
+        markerObject: null,
+      };
+    },
     mounted() {
-      new this.google.maps.Marker({
+      this.markerObject = new this.google.maps.Marker({
         position: this.marker.position,
         marker: this.marker,
         map: this.map,
-        // icon: POINT_MARKER_ICON_CONFIG,
       });
     },
   };
 </script>
-
-<style scoped>
-
-</style>
