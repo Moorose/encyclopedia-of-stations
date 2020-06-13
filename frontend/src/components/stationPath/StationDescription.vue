@@ -10,7 +10,7 @@
       <div class="name">Классность:</div>
       <div class="field">{{ station.stationClass }}</div>
       <div class="name">Описание:</div>
-      <div class="field">{{ station.description }}</div>
+      <div class="field description">{{ station.description }}</div>
     </div>
     <Button class="button" :text="buttonText" @click="editHandler"/>
   </div>
@@ -65,6 +65,9 @@
 
       .field
         justify-self: start
+
+      .description
+        text-align: justify
 
     .button
       align-self: flex-end

@@ -65,8 +65,8 @@
         return `<div class="popup" id="popup-${id}">
           <h1 class="popup__header">Станция: ${name}</h1>
             <div class="popup__content" id="bodyContent">
-              <p lass="popup__unm">ЕСР: ${UNM}</p>
-              <p lass="popup__description">${description}</p>
+              <div class="popup__unm">ЕСР: ${UNM}</div>
+              <div class="popup__description">${description}</div>
             </div>
             <button
               onclick="document.getElementById('popup-button-${id}').click();"
@@ -83,4 +83,20 @@
 <style lang="sass">
   .station_popup_hidden
     display: none
+
+  .popup
+    &__header
+      font-size: base-unit(20)
+      font-weight: bold
+    &__content
+      display: flex
+      flex-direction: column
+      align-items: flex-start
+      font-size: base-unit(14)
+    &__unm
+      margin: base-unit(20) 0
+    &__description
+      text-align: justify
+    &__button
+      margin-top: base-unit(20)
 </style>
