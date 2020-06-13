@@ -34,6 +34,9 @@ export async function authUser(request): Promise<User> {
   const { login, password } = request.payload;
   const account = await UserService.getByLogin(login);
 
+  console.log(request.payload);
+  console.log(account);
+
   if (!account || !(await comparePassword(password, account.password))) {
     throw Boom.unauthorized(`Authentication failed: ${request.auth.error.message}`);
   }
@@ -43,7 +46,7 @@ export async function authUser(request): Promise<User> {
 
   delete user.password;
 
-  return Promise.resolve(user);
+  return user;
 }
 
 export async function setAdmin(): Promise<User> {
