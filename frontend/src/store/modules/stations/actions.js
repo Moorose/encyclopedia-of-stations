@@ -16,6 +16,13 @@ const actions = {
       }, () => {
       });
   },
+  getAllStations({ commit }) {
+    return StationApi.getAll()
+      .then(({ data }) => {
+        return data;
+      }, () => {
+      });
+  },
 };
 
 export default actions;

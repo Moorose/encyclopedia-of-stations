@@ -10,18 +10,13 @@ import { stations } from '../testData/Stations';
 import { IUser } from '../interface';
 
 export async function hashPassword(password): Promise<string> {
-  return new Promise((resolve, reject) => {
-    bcrypt.genSalt(10, (err, salt) => {
-      !err || reject(err);
-      bcrypt.hash(password, salt, (err, hash) => {
-        err ? reject(err) : resolve(hash);
-      });
-    });
-  });
+  // return bcrypt.hash(password, 10);
+  return password;
 }
 
 export async function comparePassword(newPassword: string, oldPassword: string): Promise<boolean> {
-  return bcrypt.compare(newPassword, oldPassword);
+  return newPassword === oldPassword;
+  // return bcrypt.compare(newPassword, oldPassword);
 }
 
 export async function logout(request): Promise<any> {
@@ -33,6 +28,11 @@ export async function logout(request): Promise<any> {
 export async function authUser(request): Promise<User> {
   const { login, password } = request.payload;
   const account = await UserService.getByLogin(login);
+  const compareResult = await comparePassword(password, account.password);
+
+  console.log(request.payload);
+  console.log(account);
+  console.log(compareResult);
 
   if (!account || !(await comparePassword(password, account.password))) {
     throw Boom.unauthorized(`Authentication failed: ${request.auth.error.message}`);
@@ -43,7 +43,7 @@ export async function authUser(request): Promise<User> {
 
   delete user.password;
 
-  return Promise.resolve(user);
+  return user;
 }
 
 export async function setAdmin(): Promise<User> {
@@ -53,6 +53,7 @@ export async function setAdmin(): Promise<User> {
     lastName: process.env.ADMIN_LAST,
     patronymicName: process.env.ADMIN_PATRONYMIC,
     position: 'Технолог',
+    password: process.env.ADMIN_PASSWORD,
     role: UserRole.Admin,
   };
 
@@ -61,7 +62,7 @@ export async function setAdmin(): Promise<User> {
   if (isAdminExists) {
     return Promise.resolve(isAdminExists);
   }
-  admin.password = await this.hashPassword(process.env.ADMIN_PASSWORD);
+  admin.password = await this.hashPassword(admin.password);
 
   return UserService.create(admin);
 }

@@ -12,7 +12,7 @@
     class="button"
     :text="loginButtonText"
     @click="loginHandler"
-    @keydown="loginHandler"
+    @keyup:enter="loginHandler"
     />
   </div>
 </template>

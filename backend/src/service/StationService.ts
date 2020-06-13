@@ -7,7 +7,7 @@ export default {
   getById({ stationId }): Promise<Station> {
     const repository: Repository<Station> = getRepository(Station);
 
-    return repository.findOne(stationId, { relations: ['stations'] });
+    return repository.findOne(stationId, { relations: ['stations', 'coordinates'] });
   },
   getByUNM({ UNM }): Promise<Station> {
     const repository: Repository<Station> = getRepository(Station);
@@ -24,7 +24,7 @@ export default {
   getAll(): Promise<Station[]> {
     const repository: Repository<Station> = getRepository(Station);
 
-    return repository.find();
+    return repository.find({ relations: ['stations', 'coordinates'] });
   },
   create(station: IStation): Promise<Station> {
     const repository: Repository<Station> = getRepository(Station);
