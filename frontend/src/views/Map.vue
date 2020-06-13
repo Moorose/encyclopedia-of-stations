@@ -5,7 +5,7 @@
     class="wrapper"
   >
     <template slot-scope="{ google, map }">
-      <GoogleMapMarker
+      <StationMarker
         v-for="marker in markers"
         :key="marker.id"
         :marker="marker"
@@ -18,41 +18,36 @@
 
 <script>
   import GoogleMapLoader from '@/components/map/GoogleMapLoader';
-  import GoogleMapMarker from '../components/map/GoogleMapMarker';
+  import { mapActions } from 'vuex';
+  import StationMarker from '../components/map/StationMarker';
 
   export default {
     name: 'Map',
     components: {
       GoogleMapLoader,
-      GoogleMapMarker,
+      StationMarker,
     },
     data() {
       return {
-        apiKey: 'AIzaSyBZHuPV47lE6RPlTkE3SxnXAq2mDceqw98',
+        apiKey: 'AIzaSyCa2Qgv4Buh75dyzp1cjfO8jUWrI3bQ8es',
         // apiKey: process.env.GOOGLE_API_KEY,
-        markers: [
-          {
-            id: 'a',
-            position: {
-              lat: 54.939616,
-              lng: 73.385906,
-            },
-          },
-          {
-            id: 'b',
-            position: {
-              lat: 55.035588,
-              lng: 82.895181,
-            },
-          },
-          {
-            id: 'c',
-            position: {
-              lat: 56.460470,
-              lng: 84.991118,
-            },
-          }],
+        markers: [],
       };
+    },
+    async created() {
+      const stations = await this.getAllStations();
+      const stationsWithCoordinates = stations.filter((station) => station.coordinates !== null);
+
+      this.markers = stationsWithCoordinates.map((station) => {
+        return {
+          id: station.id,
+          position: {
+            lat: station.coordinates.lat,
+            lng: station.coordinates.lng,
+          },
+          station,
+        };
+      });
     },
     computed: {
       mapConfig() {
@@ -68,6 +63,9 @@
           },
         };
       },
+    },
+    methods: {
+      ...mapActions('stations', ['getAllStations']),
     },
   };
 </script>

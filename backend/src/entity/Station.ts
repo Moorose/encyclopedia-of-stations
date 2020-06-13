@@ -24,7 +24,7 @@ export class Station {
   @Column()
   stationClass: StationClass;
 
-  @OneToMany((type) => WorkingPlace, (workingPlace) => workingPlace.station)
+  @OneToMany((type) => WorkingPlace, (workingPlace) => workingPlace.station, { cascade: true })
   workingPlaces: WorkingPlace[];
 
   @ManyToMany((type) => Station, (station) => station.stations)
