@@ -2,21 +2,71 @@
   <div class="wrapper">
     <div class="table">
       <div class="name">ID:</div>
-      <div class="field">{{ station.id }}</div>
+      <div class="cell content">{{ station.id }}</div>
       <div class="name">Наименование:</div>
-      <div class="field">{{ station.name }}</div>
+      <div class="cell">
+        <div v-if="!editProcess" class="content">{{ station.name }}</div>
+        <div v-else class="content">
+          <input
+            v-model.trim="editedStation.name"
+            type="text"
+            :placeholder="placeholder.name"
+            class="field"
+          >
+        </div>
+      </div>
       <div class="name">ЕСР:</div>
-      <div class="field">{{ station.UNM }}</div>
+      <div class="cell">
+        <div v-if="!editProcess" class="content">{{ station.UNM }}</div>
+        <div v-else class="content">
+          <input
+            v-model.trim="editedStation.UNM"
+            type="number"
+            :placeholder="placeholder.UNM"
+            class="field"
+          >
+        </div>
+      </div>
       <div class="name">Классность:</div>
-      <div class="field">{{ station.stationClass }}</div>
-      <div class="name">Описание:</div>
-      <div class="field description">{{ station.description }}</div>
+      <div class="cell">
+        <div v-if="!editProcess" class="content">{{ getStationClassText(station) }}</div>
+        <div v-else class="content">
+          <select v-model="editedStation.stationClass" class="field">
+            <option disabled value="">{{placeholder.stationClass}}</option>
+            <option
+              v-for="[key, value] in Object.entries(StationClass)"
+              :value="value"
+              :key="key"
+            >{{ key }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="name description">Описание:</div>
+      <div class="cell">
+        <div v-if="!editProcess" class="content description">{{ station.description }}</div>
+        <div v-else class="content">
+          <div
+            ref="description"
+            contentEditable="true"
+            :placeholder="placeholder.description"
+            class="field field-textarea description"
+          ></div>
+        </div>
+      </div>
     </div>
-    <Button class="button" :text="buttonText" @click="editHandler"/>
+    <div class="menu">
+      <Button v-if="isAllowed({ properRole })" class="button" :text="getButtonText" @click="editHandler"/>
+      <Button v-if="editProcess" class="button" text="Отмена" @click="resetHandler"/>
+    </div>
   </div>
 </template>
 
 <script>
+  import { StationClass } from '@/modules/StationClass';
+  import { mapActions, mapGetters } from 'vuex';
+  import { UserRole } from '@/modules/UserRole';
+
   export default {
     name: 'StationDescription',
     components: {
@@ -29,23 +79,119 @@
       },
     },
     data() {
+      const {
+        id, name, UNM, stationClass, description,
+      } = this.station;
+
       return {
+        properRole: UserRole.Editor,
+        StationClass,
         buttonEditText: 'Редактировать',
         buttonSaveText: 'Сохранить',
         editProcess: false,
+        editedStation: {
+          id,
+          name,
+          UNM,
+          stationClass,
+          description,
+        },
+        placeholder: {
+          name: 'Наименование',
+          UNM: 'ЕСР',
+          stationClass: 'Классность',
+          description: 'Описание',
+        },
       };
     },
     methods: {
+      ...mapActions('stations', ['updateStationData']),
       editHandler() {
-        console.log(this.buttonText);
+        if (this.editProcess) {
+          this.updateStationData(this.editedStation).then(({ data }) => {
+            console.log(data);
+            this.$emit('save', data);
+          }).catch(({ response }) => {
+            // const { error, message, statusCode } = response.data;
+
+            console.log(response);
+          });
+        }
+
+        this.editProcess = !this.editProcess;
+        if (this.editProcess) {
+          this.$nextTick(function () {
+            this.setDescription();
+          });
+        } else {
+          this.getDescription();
+        }
+      },
+      resetHandler() {
+        this.editProcess = false;
+        this.getDescription();
+
+        const {
+          id, name, UNM, stationClass, description,
+        } = this.station;
+
+        this.editedStation = {
+          id,
+          name,
+          UNM,
+          stationClass,
+          description,
+        };
+      },
+      syncDescription() {
+        const { description } = this.$refs;
+
+        this.editedStation.description = description.innerText;
+        if (description.scrollTop !== 0) {
+          description.style.height = `${description.scrollHeight}px`;
+        }
+      },
+      setDescription() {
+        const { description } = this.$refs;
+
+        description.innerText = this.station.description;
+        description.addEventListener('input', this.syncDescription);
+      },
+      getDescription() {
+        const { description } = this.$refs;
+
+        description.removeEventListener('input', () => {
+          if (description.scrollTop !== 0) {
+            description.style.height = `${description.scrollHeight}px`;
+          }
+        });
       },
     },
     computed: {
+      ...mapGetters('user', ['isAllowed']),
       getError() {
         return (id) => this.errors.find((e) => e.id === id);
       },
       getButtonText() {
         return this.editProcess ? this.buttonSaveText : this.buttonEditText;
+      },
+      getStationClassText() {
+        return ({ stationClass }) => {
+          switch (stationClass) {
+          case 0:
+            return 'INTERMEDIATE_STATION';
+          case 1:
+            return 'BORDER_STATION';
+          case 2:
+            return 'MARSHALLING_STATION';
+          case 3:
+            return 'FREIGHT_STATION';
+          case 4:
+            return 'PASSENGER_STATION';
+          default:
+            return '';
+          }
+        };
       },
     },
   };
@@ -64,6 +210,7 @@
     .table
       display: grid
       grid-template-columns: base-unit(200) auto
+      grid-template-rows: auto
       column-gap: base-unit(45)
       row-gap: base-unit(10)
       align-items: center
@@ -73,15 +220,50 @@
       .name
         justify-self: end
 
-      .field
-        justify-self: start
+      .cell
+        justify-self: stretch
+
+      .content
+        display: flex
+        align-items: flex-start
 
       .description
         text-align: justify
+        align-self: flex-start
+
+      .field
+        padding-left: base-unit(10)
+        width: 100%
+        height: base-unit(40)
+        border: 2px solid $blossom-color
+        font-size: base-unit(24)
+        border-radius: 10px
+        background-color: $soft-peach-color
+
+        &-textarea
+          height: auto
+          resize: vertical
+
+          &:focus
+            background-color: initial
+
+          &:focus
+            background-color: initial
+
+        &:hover
+          background-color: $dust-storm-color
+
+        &:focus
+          background-color: $dust-storm-color
+
+  .menu
+    display: flex
+    justify-content: flex-end
 
     .button
       align-self: flex-end
       font-size: base-unit(24)
       width: base-unit(260)
       height: base-unit(50)
+      margin-left: base-unit(20)
 </style>

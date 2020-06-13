@@ -42,8 +42,10 @@ export default {
     const repository: Repository<Station> = getRepository(Station);
     const stationToUpdate: Station = await repository.findOne(station.id);
 
-    stationToUpdate.description = station.description;
+    stationToUpdate.name = station.name;
     stationToUpdate.UNM = station.UNM;
+    stationToUpdate.stationClass = station.stationClass;
+    stationToUpdate.description = station.description;
 
     return repository.save(stationToUpdate);
   },

@@ -1,17 +1,12 @@
 <template>
   <div class="wrapper">
-    <div
-      class="header"
-      @click="toggle"
-    >
+    <div class="header" @click="toggle">
       <div :class="direction">
         <svg width="26" height="17" viewBox="0 0 26 17" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M13 17L0.00961876 0.5L25.9904 0.5L13 17Z" fill="#E5CCCC"/>
         </svg>
       </div>
-      <slot
-        name="header"
-      />
+      <slot name="header"/>
     </div>
     <div :class="['collapsible', { 'collapsed': isCollapsed, 'not-collapsed': !isCollapsed }]">
       <slot name="main"/>

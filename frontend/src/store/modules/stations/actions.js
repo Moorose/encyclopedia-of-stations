@@ -23,6 +23,9 @@ const actions = {
       }, () => {
       });
   },
+  updateStationData({ commit }, station) {
+    return StationApi.update(station);
+  },
 };
 
 export default actions;
