@@ -30,12 +30,22 @@
     },
     data() {
       return {
-        buttonText: 'Редактировать',
+        buttonEditText: 'Редактировать',
+        buttonSaveText: 'Сохранить',
+        editProcess: false,
       };
     },
     methods: {
       editHandler() {
         console.log(this.buttonText);
+      },
+    },
+    computed: {
+      getError() {
+        return (id) => this.errors.find((e) => e.id === id);
+      },
+      getButtonText() {
+        return this.editProcess ? this.buttonSaveText : this.buttonEditText;
       },
     },
   };
