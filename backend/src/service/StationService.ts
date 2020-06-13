@@ -57,6 +57,8 @@ export default {
     parentStation.stations.push(childStation);
     childStation.stations.push(parentStation);
 
+    await repository.save(childStation);
+
     return repository.save(parentStation);
   },
 };

@@ -24,7 +24,7 @@
         Станции попутного следования
       </template>
       <template v-slot:main>
-        <PassingStations :station="station"/>
+        <PassingStations :stations="station.stations"/>
       </template>
     </CollapsibleContent>
     <CollapsibleContent

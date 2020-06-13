@@ -55,8 +55,8 @@
         </div>
       </div>
     </div>
-    <div class="menu">
-      <Button v-if="isAllowed({ properRole })" class="button" :text="getButtonText" @click="editHandler"/>
+    <div v-if="isAllowed({ properRole })" class="menu">
+      <Button class="button" :text="getButtonText" @click="editHandler"/>
       <Button v-if="editProcess" class="button" text="Отмена" @click="resetHandler"/>
     </div>
   </div>
@@ -169,9 +169,6 @@
     },
     computed: {
       ...mapGetters('user', ['isAllowed']),
-      getError() {
-        return (id) => this.errors.find((e) => e.id === id);
-      },
       getButtonText() {
         return this.editProcess ? this.buttonSaveText : this.buttonEditText;
       },
