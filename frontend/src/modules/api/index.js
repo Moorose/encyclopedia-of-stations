@@ -64,5 +64,7 @@ export const StationApi = {
   setRelatedById(parentStationId, childStationId) {
     return axios.post(`${API}/station/${parentStationId}/to/${childStationId}`);
   },
-
+  removeRelatedById(parentStationId, childStationId) {
+    return axios.delete(`${API}/station/${parentStationId}/to/${childStationId}`);
+  },
 };

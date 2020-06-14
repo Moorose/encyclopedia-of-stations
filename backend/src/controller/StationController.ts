@@ -25,4 +25,7 @@ export default {
   async setRelatedById(request) {
     return StationService.setRelatedById(request.params);
   },
+  async removeRelatedById(request) {
+    return StationService.removeRelatedById(request.params);
+  },
 };

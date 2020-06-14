@@ -8,7 +8,7 @@ import { StationClass } from '../enum/StationClass';
 import { Coordinates } from './Coordinates';
 
 @Entity()
-export class Station {
+export class Station implements IStation {
   @PrimaryGeneratedColumn()
   id: number;
 

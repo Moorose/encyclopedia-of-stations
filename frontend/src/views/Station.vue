@@ -5,12 +5,13 @@
       :collapsed="stationDescriptionCollapsed"
       @contentCollapsed="onContentCollapsed"
     >
-      <template #header>
-          Описание станци "{{ station.name }}"
+      <template v-slot:header>
+        Описание станци "{{ station.name }}"
       </template>
-      <template #main>
+      <template v-slot:main>
         <StationDescription
           :station="station"
+          @save="saveStation"
         />
       </template>
     </CollapsibleContent>
@@ -19,11 +20,11 @@
       :collapsed="passingStationsCollapsed"
       @contentCollapsed="onContentCollapsed"
     >
-      <template #header>
-          Станции попутного следования
+      <template v-slot:header>
+        Станции попутного следования
       </template>
-      <template #main>
-        <PassingStations :station="station"/>
+      <template v-slot:main>
+        <PassingStations :stationId="station.id" :stations="station.stations" @save="saveStation"/>
       </template>
     </CollapsibleContent>
     <CollapsibleContent
@@ -31,11 +32,11 @@
       :collapsed="workPlacesCollapsed"
       @contentCollapsed="onContentCollapsed"
     >
-      <template #header>
-          Рабочие места
+      <template v-slot:header>
+        Рабочие места
       </template>
-      <template #main>
-        <WorkPlaces :station="station" />
+      <template v-slot:main>
+        <WorkPlaces :station="station"/>
       </template>
     </CollapsibleContent>
   </div>
@@ -68,7 +69,7 @@
       };
     },
     methods: {
-      ...mapActions('stations', ['getStationsById']),
+      ...mapActions('stations', ['getStationsById', 'updateStationData']),
       onContentCollapsed(name) {
         if (name === 'stationDescription') {
           this.stationDescriptionCollapsed = !this.stationDescriptionCollapsed;
@@ -79,6 +80,9 @@
         if (name === 'workPlaces') {
           this.workPlacesCollapsed = !this.workPlacesCollapsed;
         }
+      },
+      async saveStation() {
+        this.station = await this.getStationsById(this.station.id);
       },
     },
   };

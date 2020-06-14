@@ -73,6 +73,11 @@ export default [
     path: '/station/{parentStationId}/to/{childStationId}',
     handler: StationController.setRelatedById,
   },
+  {
+    method: 'DELETE',
+    path: '/station/{parentStationId}/to/{childStationId}',
+    handler: StationController.removeRelatedById,
+  },
   // WorkingPlace
   {
     method: 'GET',

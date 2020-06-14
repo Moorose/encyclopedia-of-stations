@@ -71,21 +71,32 @@ export async function setTestUsers(): Promise<User[]> {
   const users: IUser[] = getTestUsers();
   const password = await this.hashPassword('test');
 
-  users.forEach((user) => { user.password = password; });
+  users.forEach((user) => {
+    user.password = password;
+  });
 
   return Promise.all(
     users.map((user) => UserService.create(user)),
   );
 }
 
-export async function setStations(): Promise<Station[]> {
+export async function setStations(): Promise<void> {
   const isStationsExist = await StationService.getAll();
 
   if (isStationsExist.length) {
-    return Promise.resolve([]);
+    return Promise.resolve();
   }
 
-  return Promise.all(
+  const savedStations = await Promise.all(
     stations.map((station) => StationService.create(station)),
   );
+
+  const [s1, s2, s3, s4] = savedStations;
+
+  await StationService.setRelatedById({ parentStationId: s1.id, childStationId: s2.id });
+  await StationService.setRelatedById({ parentStationId: s1.id, childStationId: s3.id });
+  await StationService.setRelatedById({ parentStationId: s2.id, childStationId: s3.id });
+  await StationService.setRelatedById({ parentStationId: s2.id, childStationId: s4.id });
+
+  return Promise.resolve();
 }

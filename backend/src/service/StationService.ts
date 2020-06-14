@@ -1,18 +1,29 @@
-import { getRepository, Repository } from 'typeorm';
+import { getManager, getRepository, Repository } from 'typeorm';
+import * as Boom from '@hapi/boom';
 import { Station } from '../entity/Station';
 import { IStation } from '../interface';
 
 
 export default {
-  getById({ stationId }): Promise<Station> {
+  async getById({ stationId }): Promise<Station> {
     const repository: Repository<Station> = getRepository(Station);
+    const result = await repository.findOne(stationId, { relations: ['stations', 'coordinates'] });
 
-    return repository.findOne(stationId, { relations: ['stations', 'coordinates'] });
+    if (!result) {
+      throw Boom.badRequest();
+    }
+
+    return result;
   },
-  getByUNM({ UNM }): Promise<Station> {
+  async getByUNM({ UNM }): Promise<Station> {
     const repository: Repository<Station> = getRepository(Station);
+    const result = await repository.findOne({ where: { UNM } });
 
-    return repository.findOne({ where: { UNM } });
+    if (!result) {
+      throw Boom.badRequest();
+    }
+
+    return result;
   },
   getByName({ name }): Promise<Station[]> {
     const repository: Repository<Station> = getRepository(Station);
@@ -42,19 +53,51 @@ export default {
     const repository: Repository<Station> = getRepository(Station);
     const stationToUpdate: Station = await repository.findOne(station.id);
 
-    stationToUpdate.description = station.description;
+    stationToUpdate.name = station.name;
     stationToUpdate.UNM = station.UNM;
+    stationToUpdate.stationClass = station.stationClass;
+    stationToUpdate.description = station.description;
 
     return repository.save(stationToUpdate);
   },
   async setRelatedById({ parentStationId, childStationId }): Promise<Station> {
-    const repository: Repository<Station> = getRepository(Station);
-    const parentStation: Station = await repository.findOne(parentStationId, { relations: ['stations'] });
-    const childStation: Station = await repository.findOne(childStationId, { relations: ['stations'] });
+    return getManager().transaction(async (em) => {
+      if (parentStationId === childStationId) {
+        throw Boom.badRequest();
+      }
 
-    parentStation.stations.push(childStation);
-    childStation.stations.push(parentStation);
+      const repository: Repository<Station> = em.getRepository(Station);
+      const parentStation: Station = await repository.findOne(parentStationId, { relations: ['stations'] });
+      const childStation: Station = await repository.findOne(childStationId, { relations: ['stations'] });
 
-    return repository.save(parentStation);
+      parentStation.stations.push(childStation);
+      childStation.stations.push(parentStation);
+
+    await repository.save(childStation);
+
+      await repository.save(childStation);
+      await repository.save(parentStation);
+
+      return this.getById({ stationId: parentStationId });
+    });
+  },
+  async removeRelatedById({ parentStationId, childStationId }): Promise<Station> {
+    return getManager().transaction(async (em) => {
+      if (parentStationId === childStationId) {
+        throw Boom.badRequest();
+      }
+
+      const repository: Repository<Station> = em.getRepository(Station);
+      const parentStation: Station = await repository.findOne(parentStationId, { relations: ['stations'] });
+      const childStation: Station = await repository.findOne(childStationId, { relations: ['stations'] });
+
+      parentStation.stations = parentStation.stations.filter((station) => station.id !== childStation.id);
+      childStation.stations = childStation.stations.filter((station) => station.id !== parentStation.id);
+
+      await repository.save(childStation);
+      await repository.save(parentStation);
+
+      return this.getById({ stationId: parentStationId });
+    });
   },
 };
