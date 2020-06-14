@@ -82,7 +82,6 @@
         }
       },
       async saveStation() {
-        console.log('update');
         this.station = await this.getStationsById(this.station.id);
       },
     },

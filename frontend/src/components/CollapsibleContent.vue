@@ -34,7 +34,6 @@
     },
     methods: {
       toggle() {
-        console.log('toggle');
         this.isCollapsed = !this.isCollapsed;
         this.$emit('contentCollapsed', this.name);
       },

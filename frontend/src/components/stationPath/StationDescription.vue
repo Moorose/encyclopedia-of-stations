@@ -110,7 +110,6 @@
         if (this.editProcess) {
           this.updateStationData(this.editedStation)
             .then(({ data }) => {
-              console.log(data);
               this.$emit('save');
             })
             .catch(({ response }) => {
