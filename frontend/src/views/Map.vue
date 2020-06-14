@@ -27,6 +27,9 @@
       GoogleMapLoader,
       StationMarker,
     },
+    props: {
+      center: Object,
+    },
     data() {
       return {
         apiKey: 'AIzaSyCa2Qgv4Buh75dyzp1cjfO8jUWrI3bQ8es',
@@ -35,6 +38,8 @@
       };
     },
     async created() {
+      console.log(this.center);
+
       const stations = await this.getAllStations();
       const stationsWithCoordinates = stations.filter((station) => station.coordinates !== null);
 
@@ -51,15 +56,25 @@
     },
     computed: {
       mapConfig() {
+        let lat = 54.969401;
+        let lng = 73.384296;
+        let zoom = 5;
+
+        if (this.center.lat) {
+          lat = parseFloat(this.center.lat);
+          lng = parseFloat(this.center.lng);
+          zoom = 11;
+        }
+
         return {
-          zoom: 5,
+          zoom,
           maxZoom: 16,
           minZoom: 3,
           streetViewControl: false,
           fullscreenControl: false,
           center: {
-            lat: 54.969401,
-            lng: 73.384296,
+            lat,
+            lng,
           },
         };
       },

@@ -55,8 +55,9 @@
         </div>
       </div>
     </div>
-    <div v-if="isAllowed({ properRole })" class="menu">
-      <Button class="button" :text="getButtonText" @click="editHandler"/>
+    <div class="menu">
+      <Button v-if="!editProcess" class="button" text="Показать на карте" @click="goToMap"/>
+      <Button v-if="isAllowed({ properRole })" class="button" :text="getButtonText" @click="editHandler"/>
       <Button v-if="editProcess" class="button" text="Отмена" @click="resetHandler"/>
     </div>
   </div>
@@ -109,7 +110,7 @@
       editHandler() {
         if (this.editProcess) {
           this.updateStationData(this.editedStation)
-            .then(({ data }) => {
+            .then(() => {
               this.$emit('save');
             })
             .catch(({ response }) => {
@@ -165,6 +166,14 @@
           if (description.scrollTop !== 0) {
             description.style.height = `${description.scrollHeight}px`;
           }
+        });
+      },
+      goToMap() {
+        this.$router.push({
+          name: 'Map',
+          query: {
+            ...this.station.coordinates,
+          },
         });
       },
     },

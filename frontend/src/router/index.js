@@ -6,7 +6,9 @@ Vue.use(VueRouter);
 const routes = [
   { path: '/', component: () => import('@/views/SearchStation.vue'), name: 'SearchStation' },
   { path: '/about', component: () => import('@/views/About.vue'), name: 'About' },
-  { path: '/map', component: () => import('@/views/Map.vue'), name: 'Map' },
+  {
+    path: '/map', component: () => import('@/views/Map.vue'), name: 'Map', props: (route) => ({ center: route.query }),
+  },
   { path: '/station/add', component: () => import('@/views/AddStation.vue'), name: 'AddStation' },
   { path: '/station/:id', component: () => import('@/views/Station.vue'), name: 'Station' },
   { path: '/user', component: () => import('@/views/SearchUser.vue'), name: 'SearchUser' },
