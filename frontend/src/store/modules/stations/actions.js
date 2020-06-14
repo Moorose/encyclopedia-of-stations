@@ -33,9 +33,6 @@ const actions = {
   updateStationData({ commit }, station) {
     return StationApi.update(station);
   },
-  updateStationData({ commit }, station) {
-    return StationApi.update(station);
-  },
   bindStationById({ commit }, { parentStationId, childStationId }) {
     return StationApi.setRelatedById(parentStationId, childStationId);
   },
