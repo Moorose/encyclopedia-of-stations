@@ -16,6 +16,13 @@ const actions = {
       }, () => {
       });
   },
+  getStationsByUNM({ commit }, UNM) {
+    return StationApi.getByUNM(UNM)
+      .then(({ data }) => {
+        return data;
+      }, () => {
+      });
+  },
   getAllStations({ commit }) {
     return StationApi.getAll()
       .then(({ data }) => {
@@ -25,6 +32,15 @@ const actions = {
   },
   updateStationData({ commit }, station) {
     return StationApi.update(station);
+  },
+  updateStationData({ commit }, station) {
+    return StationApi.update(station);
+  },
+  bindStationById({ commit }, { parentStationId, childStationId }) {
+    return StationApi.setRelatedById(parentStationId, childStationId);
+  },
+  unbindStationById({ commit }, { parentStationId, childStationId }) {
+    return StationApi.removeRelatedById(parentStationId, childStationId);
   },
 };
 

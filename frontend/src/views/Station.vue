@@ -24,7 +24,7 @@
         Станции попутного следования
       </template>
       <template v-slot:main>
-        <PassingStations :stations="station.stations"/>
+        <PassingStations :stationId="station.id" :stations="station.stations" @save="saveStation"/>
       </template>
     </CollapsibleContent>
     <CollapsibleContent
@@ -81,8 +81,9 @@
           this.workPlacesCollapsed = !this.workPlacesCollapsed;
         }
       },
-      async saveStation({ id }) {
-        this.station = await this.getStationsById(id);
+      async saveStation() {
+        console.log('update');
+        this.station = await this.getStationsById(this.station.id);
       },
     },
   };

@@ -108,19 +108,21 @@
       ...mapActions('stations', ['updateStationData']),
       editHandler() {
         if (this.editProcess) {
-          this.updateStationData(this.editedStation).then(({ data }) => {
-            console.log(data);
-            this.$emit('save', data);
-          }).catch(({ response }) => {
-            // const { error, message, statusCode } = response.data;
+          this.updateStationData(this.editedStation)
+            .then(({ data }) => {
+              console.log(data);
+              this.$emit('save');
+            })
+            .catch(({ response }) => {
+              // const { error, message, statusCode } = response.data;
 
-            console.log(response);
-          });
+              console.log(response);
+            });
         }
 
         this.editProcess = !this.editProcess;
         if (this.editProcess) {
-          this.$nextTick(function () {
+          this.$nextTick(() => {
             this.setDescription();
           });
         } else {
@@ -253,14 +255,14 @@
         &:focus
           background-color: $dust-storm-color
 
-  .menu
-    display: flex
-    justify-content: flex-end
+    .menu
+      display: flex
+      justify-content: flex-end
 
-    .button
-      align-self: flex-end
-      font-size: base-unit(24)
-      width: base-unit(260)
-      height: base-unit(50)
-      margin-left: base-unit(20)
+      .button
+        align-self: flex-end
+        font-size: base-unit(24)
+        width: base-unit(260)
+        height: base-unit(50)
+        margin-left: base-unit(20)
 </style>
