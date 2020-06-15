@@ -12,6 +12,10 @@
         :google="google"
         :map="map"
       />
+      <AddStationButton
+        :google="google"
+        :map="map"
+      />
     </template>
   </GoogleMapLoader>
 </template>
@@ -20,12 +24,14 @@
   import GoogleMapLoader from '@/components/map/GoogleMapLoader';
   import { mapActions } from 'vuex';
   import StationMarker from '../components/map/StationMarker';
+  import AddStationButton from '../components/map/AddStationButton';
 
   export default {
     name: 'Map',
     components: {
       GoogleMapLoader,
       StationMarker,
+      AddStationButton,
     },
     props: {
       center: Object,
