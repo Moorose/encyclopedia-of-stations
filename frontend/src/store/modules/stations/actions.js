@@ -30,6 +30,9 @@ const actions = {
       }, () => {
       });
   },
+  saveStationData({ commit }, station) {
+    return StationApi.create(station);
+  },
   updateStationData({ commit }, station) {
     return StationApi.update(station);
   },
