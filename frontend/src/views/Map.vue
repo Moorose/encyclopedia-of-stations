@@ -13,6 +13,7 @@
         :map="map"
       />
       <AddStationButton
+        v-if="isAllowed({properRole})"
         :google="google"
         :map="map"
       />
@@ -22,9 +23,10 @@
 
 <script>
   import GoogleMapLoader from '@/components/map/GoogleMapLoader';
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import StationMarker from '../components/map/StationMarker';
   import AddStationButton from '../components/map/AddStationButton';
+  import { UserRole } from '../modules/UserRole';
 
   export default {
     name: 'Map',
@@ -38,6 +40,7 @@
     },
     data() {
       return {
+        properRole: UserRole.Editor,
         apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
         markers: [],
       };
@@ -58,6 +61,7 @@
       });
     },
     computed: {
+      ...mapGetters('user', ['isAllowed']),
       mapConfig() {
         let lat = 54.969401;
         let lng = 73.384296;
