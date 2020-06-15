@@ -32,14 +32,11 @@
     },
     data() {
       return {
-        apiKey: 'AIzaSyCa2Qgv4Buh75dyzp1cjfO8jUWrI3bQ8es',
-        // apiKey: process.env.GOOGLE_API_KEY,
+        apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
         markers: [],
       };
     },
     async created() {
-      console.log(this.center);
-
       const stations = await this.getAllStations();
       const stationsWithCoordinates = stations.filter((station) => station.coordinates !== null);
 
