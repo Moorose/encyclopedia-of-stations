@@ -1,19 +1,12 @@
-import * as Boom from '@hapi/boom';
 import StationController from './controller/StationController';
 import UserController from './controller/UserController';
 import WorkingPlaceController from './controller/WorkingPlaceController';
 import { authUser, logout } from './helper';
 
-
-const users = [
-  { username: 'john', password: 'test', id: '1' },
-  { username: 'tom', password: 'test', id: '2' },
-];
-
 export default [
   // auth
   {
-    method: 'get',
+    method: 'GET',
     path: '/me',
     handler: UserController.getMe,
   },

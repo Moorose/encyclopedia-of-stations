@@ -4,7 +4,6 @@ import { UserRole } from '../enum/UserRole';
 import { User } from '../entity/User';
 import UserService from '../service/UserService';
 import StationService from '../service/StationService';
-import { Station } from '../entity/Station';
 import { getTestUsers } from '../testData/Users';
 import { stations } from '../testData/Stations';
 import { IUser } from '../interface';
@@ -28,11 +27,6 @@ export async function logout(request): Promise<any> {
 export async function authUser(request): Promise<User> {
   const { login, password } = request.payload;
   const account = await UserService.getByLogin(login);
-  const compareResult = await comparePassword(password, account.password);
-
-  console.log(request.payload);
-  console.log(account);
-  console.log(compareResult);
 
   if (!account || !(await comparePassword(password, account.password))) {
     throw Boom.unauthorized(`Authentication failed: ${request.auth.error.message}`);
