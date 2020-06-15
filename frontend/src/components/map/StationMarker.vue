@@ -62,15 +62,15 @@
           id, name, description, UNM,
         } = this.station;
 
-        return `<div class="popup" id="popup-${id}">
-          <h1 class="popup__header">Станция: ${name}</h1>
-            <div class="popup__content" id="bodyContent">
-              <div class="popup__unm">ЕСР: ${UNM}</div>
-              <div class="popup__description">${description}</div>
+        return `<div class="popup__station" id="popup-${id}">
+          <h1 class="popup__station__header">Станция: ${name}</h1>
+            <div class="popup__station__content" id="bodyContent">
+              <div class="popup__station__unm">ЕСР: ${UNM}</div>
+              <div class="popup__station__description">${description}</div>
             </div>
             <button
               onclick="document.getElementById('popup-button-${id}').click();"
-              class="popup__button"
+              class="popup__station__button"
             >
               Подробнее
             </button>
@@ -84,7 +84,7 @@
   .station_popup_hidden
     display: none
 
-  .popup
+  .popup__station
     &__header
       font-size: base-unit(20)
       font-weight: bold

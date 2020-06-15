@@ -45,8 +45,6 @@ export const StationApi = {
     return axios.get(`${API}/station/unm/${UNM}`);
   },
   getByName(name) {
-    console.log(name);
-
     return axios.get(`${API}/station/name/${name}`);
   },
   getAll() {

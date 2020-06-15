@@ -29,7 +29,7 @@
       </div>
       <div class="name">Классность:</div>
       <div class="cell">
-        <div v-if="!editProcess" class="content">{{ getStationClassText(station) }}</div>
+        <div v-if="!editProcess" class="content">{{ getStationClassText(station.stationClass) }}</div>
         <div v-else class="content">
           <select v-model="editedStation.stationClass" class="field">
             <option disabled value="">{{placeholder.stationClass}}</option>
@@ -37,14 +37,14 @@
               v-for="[key, value] in Object.entries(StationClass)"
               :value="value"
               :key="key"
-            >{{ key }}
+            >{{ getStationClassText(value) }}
             </option>
           </select>
         </div>
       </div>
       <div class="name description">Описание:</div>
       <div class="cell">
-        <div v-if="!editProcess" class="content description">{{ station.description }}</div>
+        <div v-if="!editProcess" class="content description">{{ station.description || 'отсутствует' }}</div>
         <div v-else class="content">
           <div
             ref="description"
@@ -55,8 +55,9 @@
         </div>
       </div>
     </div>
-    <div v-if="isAllowed({ properRole })" class="menu">
-      <Button class="button" :text="getButtonText" @click="editHandler"/>
+    <div class="menu">
+      <Button v-if="!editProcess" class="button" text="Показать на карте" @click="goToMap"/>
+      <Button v-if="isAllowed({ properRole })" class="button" :text="getButtonText" @click="editHandler"/>
       <Button v-if="editProcess" class="button" text="Отмена" @click="resetHandler"/>
     </div>
   </div>
@@ -109,7 +110,7 @@
       editHandler() {
         if (this.editProcess) {
           this.updateStationData(this.editedStation)
-            .then(({ data }) => {
+            .then(() => {
               this.$emit('save');
             })
             .catch(({ response }) => {
@@ -167,6 +168,14 @@
           }
         });
       },
+      goToMap() {
+        this.$router.push({
+          name: 'Map',
+          query: {
+            ...this.station.coordinates,
+          },
+        });
+      },
     },
     computed: {
       ...mapGetters('user', ['isAllowed']),
@@ -174,18 +183,18 @@
         return this.editProcess ? this.buttonSaveText : this.buttonEditText;
       },
       getStationClassText() {
-        return ({ stationClass }) => {
+        return (stationClass) => {
           switch (stationClass) {
           case 0:
-            return 'INTERMEDIATE_STATION';
+            return 'Промежуточная станция';
           case 1:
-            return 'BORDER_STATION';
+            return 'Участковая станция';
           case 2:
-            return 'MARSHALLING_STATION';
+            return 'Сортировочная станция';
           case 3:
-            return 'FREIGHT_STATION';
+            return 'Грузовая станция';
           case 4:
-            return 'PASSENGER_STATION';
+            return 'Пассажирская станция';
           default:
             return '';
           }
@@ -230,6 +239,7 @@
         align-self: flex-start
 
       .field
+        color: $pickled-bluewood-color
         padding-left: base-unit(10)
         width: 100%
         height: base-unit(40)
@@ -239,6 +249,8 @@
         background-color: $soft-peach-color
 
         &-textarea
+          min-height: base-unit(40)
+          max-width: base-unit(1151)
           height: auto
           resize: vertical
 

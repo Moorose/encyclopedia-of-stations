@@ -12,25 +12,36 @@
         :google="google"
         :map="map"
       />
+      <AddStationButton
+        v-if="isAllowed({properRole})"
+        :google="google"
+        :map="map"
+      />
     </template>
   </GoogleMapLoader>
 </template>
 
 <script>
   import GoogleMapLoader from '@/components/map/GoogleMapLoader';
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import StationMarker from '../components/map/StationMarker';
+  import AddStationButton from '../components/map/AddStationButton';
+  import { UserRole } from '../modules/UserRole';
 
   export default {
     name: 'Map',
     components: {
       GoogleMapLoader,
       StationMarker,
+      AddStationButton,
+    },
+    props: {
+      center: Object,
     },
     data() {
       return {
-        apiKey: 'AIzaSyCa2Qgv4Buh75dyzp1cjfO8jUWrI3bQ8es',
-        // apiKey: process.env.GOOGLE_API_KEY,
+        properRole: UserRole.Editor,
+        apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
         markers: [],
       };
     },
@@ -50,16 +61,27 @@
       });
     },
     computed: {
+      ...mapGetters('user', ['isAllowed']),
       mapConfig() {
+        let lat = 54.969401;
+        let lng = 73.384296;
+        let zoom = 5;
+
+        if (this.center.lat) {
+          lat = parseFloat(this.center.lat);
+          lng = parseFloat(this.center.lng);
+          zoom = 11;
+        }
+
         return {
-          zoom: 5,
+          zoom,
           maxZoom: 16,
           minZoom: 3,
           streetViewControl: false,
           fullscreenControl: false,
           center: {
-            lat: 54.969401,
-            lng: 73.384296,
+            lat,
+            lng,
           },
         };
       },
