@@ -17,12 +17,15 @@ export interface IUser {
 
 export interface IWorkingPlace {
   id?: number;
-  position?: string;
-  description?: string;
-  telephone?: string;
-  AO?: string;
-  IPAddress?: string;
-  password?: string;
+  name: string;
+  telephone: string;
+  IPAddress: string;
+  password: string;
+  position: string;
+  description: string;
+  ASOUPMessage: string;
+  ATDForms: string;
+  AO: string;
   station: Station;
 }
 

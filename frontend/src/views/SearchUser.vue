@@ -32,7 +32,7 @@
           <div class="data cell">{{user.position}}</div>
         </router-link>
         <router-link :key="`role${user.id}`" :to="`/user/${user.id}`">
-          <div class="data cell">{{user.role}}</div>
+          <div class="data cell">{{userRole(user.role)}}</div>
         </router-link>
       </template>
     </div>
@@ -41,6 +41,7 @@
 
 <script>
   import { mapActions } from 'vuex';
+  import { UserRole } from '@/modules/UserRole';
 
   export default {
     name: 'SearchUser',
@@ -68,6 +69,11 @@
     computed: {
       username() {
         return (user) => `${user.firstName} ${user.lastName} ${user.patronymicName}`;
+      },
+      userRole() {
+        return (role) => {
+          return Object.keys(UserRole)[role];
+        };
       },
     },
   };

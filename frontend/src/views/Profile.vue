@@ -130,6 +130,7 @@
           :text="buttonPasswordText"
           @click="editPassword"
         />
+        <Button v-if="editProcess && isAllowed({ properRole })" class="button" text="Удалить"/>
         <Button v-if="isAllowed({ properRole })" class="button" :text="buttonSaveText" @click="saveHandler"/>
         <Button v-if="editProcess" class="button" text="Отмена" @click="resetHandler"/>
       </div>

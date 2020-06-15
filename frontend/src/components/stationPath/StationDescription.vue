@@ -57,6 +57,7 @@
     </div>
     <div class="menu">
       <Button v-if="!editProcess" class="button" text="Показать на карте" @click="goToMap"/>
+      <Button v-if="isAllowed({ properRole })" class="button" text="Удалить"/>
       <Button v-if="isAllowed({ properRole })" class="button" :text="getButtonText" @click="editHandler"/>
       <Button v-if="editProcess" class="button" text="Отмена" @click="resetHandler"/>
     </div>

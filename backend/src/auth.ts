@@ -2,11 +2,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import UserService from './service/UserService';
 
-const users = [
-  { username: 'john', password: 'test', id: '1' },
-  { username: 'tom', password: 'test', id: '2' },
-];
-
 async function register(server) {
   await server.register(require('@hapi/cookie'));
 

@@ -73,8 +73,6 @@ export default {
       parentStation.stations.push(childStation);
       childStation.stations.push(parentStation);
 
-    await repository.save(childStation);
-
       await repository.save(childStation);
       await repository.save(parentStation);
 

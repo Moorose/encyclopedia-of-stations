@@ -11,6 +11,9 @@ export class WorkingPlace {
   id: number;
 
   @Column()
+  name: string;
+
+  @Column()
   telephone: string;
 
   @Column()
@@ -26,6 +29,12 @@ export class WorkingPlace {
   description: string;
 
   @Column()
+  ASOUPMessage: string;
+
+  @Column()
+  ATDForms: string;
+
+  @Column()
   AO: string;
 
   @ManyToOne((type) => Station,
@@ -35,11 +44,14 @@ export class WorkingPlace {
 
   public constructor(data: IWorkingPlace) {
     if (data) {
+      this.name = data.name;
       this.telephone = data.telephone;
       this.IPAddress = data.IPAddress;
       this.password = data.password;
       this.position = data.position;
       this.description = data.description;
+      this.ASOUPMessage = data.ASOUPMessage;
+      this.ATDForms = data.ATDForms;
       this.AO = data.AO;
       this.station = data.station;
     }
