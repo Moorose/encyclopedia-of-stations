@@ -54,10 +54,33 @@
           ></div>
         </div>
       </div>
+      <div class="name">{{placeholder.coordinates}}:</div>
+      <div class="cell">
+        <div class="coordinates">
+          <div>Lat:</div>
+          <div v-if="!editProcess" class="content-coordinates">{{station.coordinates.lat}}</div>
+          <input
+            v-else
+            v-model.trim="editedStation.coordinates.lat"
+            type="number"
+            :placeholder="placeholder.coordinates"
+            class="field field-coordinates"
+          >
+          <div>Lng:</div>
+          <div v-if="!editProcess" class="content-coordinates">{{station.coordinates.lng}}</div>
+          <input
+            v-else
+            v-model.trim="editedStation.coordinates.lng"
+            type="number"
+            :placeholder="placeholder.coordinates"
+            class="field field-coordinates"
+          >
+        </div>
+      </div>
     </div>
     <div class="menu">
       <Button v-if="!editProcess" class="button" text="Показать на карте" @click="goToMap"/>
-      <Button v-if="isAllowed({ properRole })" class="button" text="Удалить"/>
+      <Button v-if="isAllowed({ properRole }) && editProcess" class="button" text="Удалить"/>
       <Button v-if="isAllowed({ properRole })" class="button" :text="getButtonText" @click="editHandler"/>
       <Button v-if="editProcess" class="button" text="Отмена" @click="resetHandler"/>
     </div>
@@ -84,6 +107,7 @@
       const {
         id, name, UNM, stationClass, description,
       } = this.station;
+      const { lat, lng } = this.station.coordinates;
 
       return {
         properRole: UserRole.Editor,
@@ -97,12 +121,17 @@
           UNM,
           stationClass,
           description,
+          coordinates: {
+            lat,
+            lng,
+          },
         },
         placeholder: {
           name: 'Наименование',
           UNM: 'ЕСР',
           stationClass: 'Классность',
           description: 'Описание',
+          coordinates: 'Координаты',
         },
       };
     },
@@ -137,6 +166,7 @@
         const {
           id, name, UNM, stationClass, description,
         } = this.station;
+        const { lat, lng } = this.station.coordinates;
 
         this.editedStation = {
           id,
@@ -144,6 +174,10 @@
           UNM,
           stationClass,
           description,
+          coordinates: {
+            lat,
+            lng,
+          },
         };
       },
       syncDescription() {
@@ -231,9 +265,19 @@
       .cell
         justify-self: stretch
 
+      .coordinates
+        display: flex
+        align-items: center
+
       .content
         display: flex
         align-items: flex-start
+
+        &-coordinates
+          margin: 0 base-unit(20)
+
+          &:last-child
+            margin-right: 0
 
       .description
         text-align: justify
@@ -248,6 +292,12 @@
         font-size: base-unit(24)
         border-radius: 10px
         background-color: $soft-peach-color
+
+        &-coordinates
+          margin: 0 base-unit(20)
+
+          &:last-child
+            margin-right: 0
 
         &-textarea
           min-height: base-unit(40)

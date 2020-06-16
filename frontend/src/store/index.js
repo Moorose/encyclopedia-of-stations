@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import app from './modules/app';
 import user from './modules/user';
 import stations from './modules/stations';
+import workplaces from './modules/workplaces';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    app,
     user,
     stations,
+    workplaces,
   },
   plugins: [],
 });

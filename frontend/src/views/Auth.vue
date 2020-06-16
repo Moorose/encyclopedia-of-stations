@@ -70,7 +70,8 @@
     display: flex
     align-items: center
     flex-direction: column
-    padding-top: base-unit(25)
+    justify-content: center
+    height: calc(100vh - #{base-unit(62)})
 
     .title
       font-size: base-unit(36)

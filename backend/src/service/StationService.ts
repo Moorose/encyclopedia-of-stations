@@ -2,6 +2,7 @@ import { getManager, getRepository, Repository } from 'typeorm';
 import * as Boom from '@hapi/boom';
 import { Station } from '../entity/Station';
 import { IStation } from '../interface';
+import { Coordinates } from '../entity/Coordinates';
 
 
 export default {
@@ -57,6 +58,7 @@ export default {
     stationToUpdate.UNM = station.UNM;
     stationToUpdate.stationClass = station.stationClass;
     stationToUpdate.description = station.description;
+    stationToUpdate.coordinates = new Coordinates(station.coordinates);
 
     return repository.save(stationToUpdate);
   },
