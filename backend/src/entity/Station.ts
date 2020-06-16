@@ -3,7 +3,7 @@ import {
   Entity, OneToMany, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany, JoinColumn, OneToOne,
 } from 'typeorm';
 import { IStation } from '../interface';
-import { WorkingPlace } from './WorkingPlace';
+import { WorkPlace } from './WorkPlace';
 import { StationClass } from '../enum/StationClass';
 import { Coordinates } from './Coordinates';
 
@@ -24,8 +24,8 @@ export class Station implements IStation {
   @Column()
   stationClass: StationClass;
 
-  @OneToMany((type) => WorkingPlace, (workingPlace) => workingPlace.station, { cascade: true })
-  workingPlaces: WorkingPlace[];
+  @OneToMany((type) => WorkPlace, (workingPlace) => workingPlace.station, { cascade: true })
+  workingPlaces: WorkPlace[];
 
   @ManyToMany((type) => Station, (station) => station.stations)
   @JoinTable()

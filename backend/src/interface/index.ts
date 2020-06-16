@@ -1,4 +1,4 @@
-import { WorkingPlace } from '../entity/WorkingPlace';
+import { WorkPlace } from '../entity/WorkPlace';
 import { Station } from '../entity/Station';
 import { UserRole } from '../enum/UserRole';
 import { StationClass } from '../enum/StationClass';
@@ -15,7 +15,7 @@ export interface IUser {
   role: UserRole;
 }
 
-export interface IWorkingPlace {
+export interface IWorkPlace {
   id?: number;
   name: string;
   telephone: string;
@@ -26,7 +26,7 @@ export interface IWorkingPlace {
   ASOUPMessage: string;
   ATDForms: string;
   AO: string;
-  station: Station;
+  station?: Station;
 }
 
 export interface IStation {
@@ -35,7 +35,7 @@ export interface IStation {
   description: string;
   UNM: number;
   stationClass: StationClass;
-  workingPlaces: WorkingPlace[];
+  workingPlaces: WorkPlace[];
   stations: Station[];
   coordinates?: Coordinates;
 }

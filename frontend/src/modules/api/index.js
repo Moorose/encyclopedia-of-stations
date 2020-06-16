@@ -66,3 +66,19 @@ export const StationApi = {
     return axios.delete(`${API}/station/${parentStationId}/to/${childStationId}`);
   },
 };
+
+
+export const WorkPlaceApi = {
+  getAll(stationId) {
+    return axios.get(`${API}/station/${stationId}/workplace`);
+  },
+  create(stationId, workPlace) {
+    return axios.post(`${API}/station/${stationId}/workplace`, workPlace);
+  },
+  delete(workPlaceId) {
+    return axios.delete(`${API}/station/workplace/${workPlaceId}`);
+  },
+  update(workPlaceId, workPlace) {
+    return axios.put(`${API}/station/workplace/${workPlaceId}`, workPlace);
+  },
+};

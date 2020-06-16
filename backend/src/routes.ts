@@ -1,6 +1,6 @@
 import StationController from './controller/StationController';
 import UserController from './controller/UserController';
-import WorkingPlaceController from './controller/WorkingPlaceController';
+import WorkPlaceController from './controller/WorkPlaceController';
 import { authUser, logout } from './helper';
 
 export default [
@@ -71,26 +71,26 @@ export default [
     path: '/station/{parentStationId}/to/{childStationId}',
     handler: StationController.removeRelatedById,
   },
-  // WorkingPlace
+  // WorkPlace
   {
     method: 'GET',
-    path: '/station/{stationId}/workingplace',
-    handler: WorkingPlaceController.getAll,
+    path: '/station/{stationId}/workplace',
+    handler: WorkPlaceController.getAll,
   },
   {
     method: 'POST',
-    path: '/station/{stationId}/workingplace',
-    handler: WorkingPlaceController.create,
+    path: '/station/{stationId}/workplace',
+    handler: WorkPlaceController.create,
   },
   {
     method: 'DELETE',
-    path: '/station/{stationId}/workingplace{workingPlaceId}',
-    handler: WorkingPlaceController.delete,
+    path: '/station/workplace/{workPlaceId}',
+    handler: WorkPlaceController.delete,
   },
   {
     method: 'PUT',
-    path: '/station/{stationId}/workingplace/{workingPlaceId}',
-    handler: WorkingPlaceController.update,
+    path: '/station/workplace/{workPlaceId}',
+    handler: WorkPlaceController.update,
   },
   //  Users
   {

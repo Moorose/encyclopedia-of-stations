@@ -1,4 +1,4 @@
-import WorkingPlaceService from '../service/WorkingPlaceService';
+import WorkingPlaceService from '../service/WorkPlaceService';
 
 
 export default {

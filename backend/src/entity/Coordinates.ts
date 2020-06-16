@@ -3,7 +3,7 @@ import {
   Entity, OneToMany, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany, OneToOne, JoinColumn,
 } from 'typeorm';
 import { ICoordinates, IStation } from '../interface';
-import { WorkingPlace } from './WorkingPlace';
+import { WorkPlace } from './WorkPlace';
 import { StationClass } from '../enum/StationClass';
 import { Station } from './Station';
 

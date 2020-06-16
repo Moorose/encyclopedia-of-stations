@@ -2,11 +2,11 @@
 import {
   Entity, ManyToOne, PrimaryGeneratedColumn, Column,
 } from 'typeorm';
-import { IWorkingPlace } from '../interface';
+import { IWorkPlace } from '../interface';
 import { Station } from './Station';
 
 @Entity()
-export class WorkingPlace {
+export class WorkPlace {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -42,7 +42,7 @@ export class WorkingPlace {
     { onDelete: 'CASCADE' })
   station: Station;
 
-  public constructor(data: IWorkingPlace) {
+  public constructor(data: IWorkPlace) {
     if (data) {
       this.name = data.name;
       this.telephone = data.telephone;
