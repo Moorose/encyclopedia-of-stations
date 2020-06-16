@@ -7,9 +7,9 @@ export default {
   async getAll({ stationId }): Promise<WorkPlace[]> {
     const repository: Repository<WorkPlace> = getRepository(WorkPlace);
     const result = await repository.find({
-      relations: ['stations'],
+      relations: ['station'],
       where: {
-        stationId,
+        station: stationId,
       },
     });
 

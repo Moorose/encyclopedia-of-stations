@@ -36,7 +36,7 @@
         Рабочие места
       </template>
       <template v-slot:main>
-        <WorkPlaces :station="station"/>
+        <WorkPlaces :stationId="station.id"/>
       </template>
     </CollapsibleContent>
   </div>

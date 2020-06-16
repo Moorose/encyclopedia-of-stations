@@ -2,21 +2,23 @@
   <div class="wrapper">
     <div class="table">
       <div class="name">ID:</div>
-      <div class="field">{{ station.id }}</div>
+      <div class="field">{{}}</div>
       <div class="name">Наименование:</div>
-      <div class="field">{{ station.name }}</div>
+      <div class="field">{{}}</div>
       <div class="name">ЕСР:</div>
-      <div class="field">{{ station.UNM }}</div>
+      <div class="field">{{}}</div>
       <div class="name">Классность:</div>
-      <div class="field">{{ station.stationClass }}</div>
+      <div class="field">{{}}</div>
       <div class="name">Описание:</div>
-      <div class="field">{{ station.description }}</div>
+      <div class="field">{{}}</div>
     </div>
     <Button class="button" :text="buttonText" @click="editHandler"/>
   </div>
 </template>
 
 <script>
+  import { mapActions, mapGetters } from 'vuex';
+
   export default {
     name: 'WorkPlaces',
     components: {
@@ -24,19 +26,28 @@
 
     },
     props: {
-      station: {
-        type: Object,
+      stationId: {
+        type: Number,
         required: true,
       },
     },
     data() {
       return {
+        workplaces: [],
+        editProcess: false,
         buttonText: 'Редактировать',
       };
     },
+    async created() {
+      this.workplaces = await this.getWorkPlacesByStationId(this.stationId);
+    },
+    computed: {
+      ...mapGetters('user', ['isAllowed']),
+    },
     methods: {
+      ...mapActions('workplaces', ['getWorkPlacesByStationId']),
       editHandler() {
-        console.log(this.buttonText);
+        this.editProcess = !this.editProcess;
       },
     },
   };
