@@ -33,7 +33,7 @@
       <Button v-if="editProcess" class="button" :text="buttonAddText" @click="addStationHandler"/>
       <Button class="button" :text="getButtonText" @click="editHandler"/>
     </div>
-    <ModalContent :isVisible="modalIsVisible" @close="closeModal">
+    <ModalContent :isVisible="modalIsVisible" @close="closeModal" class="modal">
       <BindStation @close="closeModal" :stationId="stationId" :stations="stations"/>
     </ModalContent>
   </div>
@@ -160,4 +160,7 @@
         width: base-unit(260)
         height: base-unit(50)
         margin-left: base-unit(20)
+
+  .modal
+    padding-top: base-unit(240)
 </style>

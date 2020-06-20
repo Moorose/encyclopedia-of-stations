@@ -1,29 +1,59 @@
 <template>
   <div class="wrapper">
     <div v-if="workplaces.length" :class="tableClass">
-        <div class="header cell">ID</div>
-        <div class="header cell">Название</div>
-        <div class="header cell">IP-адрес</div>
-        <div class="header cell">Должность</div>
-        <div class="header cell">Телефон</div>
-        <div v-if="editProcess" class="header cell"></div>
+      <div class="header cell">ID</div>
+      <div class="header cell">Название</div>
+      <div class="header cell">IP-адрес</div>
+      <div class="header cell">Должность</div>
+      <div class="header cell">Телефон</div>
+      <div v-if="editProcess" class="header cell"></div>
       <template v-for="workplace in workplaces">
-        <div class="data cell" :key="`id${workplace.id}`">{{workplace.id}}</div>
-        <div class="data cell" :key="`name${workplace.id}`">{{workplace.name}}</div>
-        <div class="data cell" :key="`IPAddress${workplace.id}`">{{workplace.IPAddress}}</div>
-        <div class="data cell" :key="`position${workplace.id}`">{{workplace.position}}</div>
-        <div class="data cell" :key="`telephone${workplace.id}`">{{workplace.telephone}}</div>
+        <div
+          class="data cell"
+          @click="clickRowHandler(workplace)"
+          :key="`id${workplace.id}`"
+        >
+          {{workplace.id}}
+        </div>
+        <div
+          class="data cell"
+          @click="clickRowHandler(workplace)"
+          :key="`name${workplace.id}`"
+        >
+          {{workplace.name}}
+        </div>
+        <div
+          class="data cell"
+          @click="clickRowHandler(workplace)"
+          :key="`IPAddress${workplace.id}`"
+        >
+          {{workplace.IPAddress}}
+        </div>
+        <div
+          class="data cell"
+          @click="clickRowHandler(workplace)"
+          :key="`position${workplace.id}`"
+        >
+          {{workplace.position}}
+        </div>
+        <div
+          class="data cell"
+          @click="clickRowHandler(workplace)"
+          :key="`telephone${workplace.id}`"
+        >
+          {{workplace.telephone}}
+        </div>
         <div v-if="editProcess" :key="`btn${workplace.id}`" class="data cell">
           <Button class="close" text="x" @click="remove"/>
         </div>
       </template>
     </div>
     <div v-if="isAllowed({ properRole })" class="menu">
-      <Button v-if="editProcess" class="button" :text="buttonAddText" @click="editHandler"/>
+      <Button v-if="editProcess" class="button" :text="buttonAddText" @click="addHandler"/>
       <Button class="button" :text="getButtonText" @click="editHandler"/>
     </div>
-    <ModalContent :isVisible="modalIsVisible" @close="closeModal">
-      Content
+    <ModalContent :isVisible="modalIsVisible" @close="closeModal" class="modal">
+      <WorkPlaceEditor :edit="editProcess" :editableContent="focusContent" @close="closeModal"></WorkPlaceEditor>
     </ModalContent>
   </div>
 </template>
@@ -31,12 +61,14 @@
 <script>
   import { mapActions, mapGetters } from 'vuex';
   import { UserRole } from '@/modules/UserRole';
+  import WorkPlaceEditor from '@/components/stationPath/WorkPlaceEditor';
 
   export default {
     name: 'WorkPlaces',
     components: {
       Button: () => import('@/components/Button.vue'),
       ModalContent: () => import('@/components/ModalContent'),
+      WorkPlaceEditor,
     },
     props: {
       stationId: {
@@ -50,6 +82,7 @@
         workplaces: [],
         editProcess: false,
         modalIsVisible: false,
+        focusContent: null,
         buttonEditText: 'Редактировать',
         buttonEndText: 'Закончить',
         buttonAddText: 'Добавить',
@@ -72,17 +105,23 @@
       editHandler() {
         this.editProcess = !this.editProcess;
       },
+      addHandler() {
+        this.focusContent = null;
+        this.modalIsVisible = true;
+      },
       remove() {
         console.log('remove');
       },
-      addWorkPlaceHandler() {
-        this.modalIsVisible = !this.modalIsVisible;
+      clickRowHandler(workplace) {
+        this.modalIsVisible = true;
+        this.focusContent = workplace;
       },
       async closeModal(isUpdate) {
+        console.log(isUpdate);
         if (isUpdate) {
-          this.workplaces = await this.getWorkPlacesByStationId(this.stationId);
+          // this.workplaces = await this.getWorkPlacesByStationId(this.stationId);
         }
-        this.modalIsVisible = !this.modalIsVisible;
+        this.modalIsVisible = false;
       },
     },
   };
@@ -136,4 +175,6 @@
         width: base-unit(260)
         height: base-unit(50)
         margin-left: base-unit(20)
+  .modal
+    padding-top: base-unit(50)
 </style>

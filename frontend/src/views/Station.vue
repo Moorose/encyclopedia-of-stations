@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" v-if="station">
+  <div class="station-wrapper" v-if="station">
     <CollapsibleContent
       name="stationDescription"
       :collapsed="stationDescriptionCollapsed"
@@ -89,7 +89,8 @@
 </script>
 
 <style lang="sass" scoped>
-  .wrapper
+  .station-wrapper
     display: flex
     flex-direction: column
+    padding-bottom: base-unit(40)
 </style>
