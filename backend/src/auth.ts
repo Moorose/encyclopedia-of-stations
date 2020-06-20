@@ -23,7 +23,7 @@ async function register(server) {
       return { valid: true, credentials: account };
     },
   });
-  server.log('info', 'Plugin registered: authentication with Cookie');
+  server.logger.info('Plugin registered: authentication with Cookie');
 }
 
 export default {
