@@ -7,7 +7,7 @@ module.exports = {
   database: 'storage',
   synchronize: true,
   dropSchema: true,
-  logging: true,
+  logging: false,
   entities: [
     'src/entity/**/*.ts',
   ],
