@@ -1,110 +1,117 @@
 <template>
   <div class="wrapper">
     <div v-if="isPresent" class="table">
-      <div class="name">Рабочее место:</div>
-      <div class="cell content">{{ workPlace.name }}</div>
-      <div class="name">Должность:</div>
-      <div class="cell content">{{ workPlace.position }}</div>
-      <div class="name">Телефон:</div>
-      <div class="cell content">{{ workPlace.telephone }}</div>
-      <div class="name">IP-адрес:</div>
-      <div class="cell content">{{ workPlace.IPAddress }}</div>
-      <div class="name">Пароль:</div>
-      <div class="cell content">{{ workPlace.password }}</div>
-      <div class="name">AO:</div>
-      <div class="cell content">{{ workPlace.AO }}</div>
-      <div class="name">Формы ЭТД:</div>
-      <div class="cell content">{{ workPlace.ATDForms }}</div>
-      <div class="name">Описание:</div>
-      <div class="cell content">{{ workPlace.description }}</div>
-      <div class="cell messages messages-header">Перечень сообщений, передаваемых в АСОУП</div>
-      <div class="cell messages">{{ workPlace.ASOUPMessage }}</div>
+      <div class="table__row">
+        <div class="table__row__name">Рабочее место</div>
+        <div class="table__row__cell">{{ workPlace.name }}</div>
+      </div>
+      <div class="table__row">
+        <div class="table__row__name">Должность</div>
+        <div class="table__row__cell">{{ workPlace.position }}</div>
+      </div>
+      <div class="table__row">
+        <div class="table__row__name">Телефон</div>
+        <div class="table__row__cell">{{ workPlace.telephone }}</div>
+      </div>
+      <div class="table__row">
+        <div class="table__row__name">IP-адрес</div>
+        <div class="table__row__cell">{{ workPlace.IPAddress }}</div>
+      </div>
+      <div class="table__row">
+        <div class="table__row__name">Пароль</div>
+        <div class="table__row__cell">{{ workPlace.password }}</div>
+      </div>
+      <div class="table__row">
+        <div class="table__row__name">AO</div>
+        <div class="table__row__cell">{{ workPlace.AO }}</div>
+      </div>
+      <div class="table__row">
+        <div class="table__row__name">Формы ЭТД</div>
+        <div class="table__row__cell">{{ workPlace.ATDForms }}</div>
+      </div>
+      <div class="table__row direction-row">
+        <div class="table__row__name">Описание</div>
+        <div class="table__row__cell">{{ workPlace.description }}</div>
+      </div>
+      <div class="table__row direction-row">
+        <div class="table__row__column-name">Перечень сообщений, передаваемых в АСОУП</div>
+        <div class="table__row__cell">{{ workPlace.ASOUPMessage }}</div>
+      </div>
     </div>
     <div v-else class="table">
-      <div class="name">Рабочее место:</div>
-      <div class="cell">
-        <input
-          v-model.trim="workPlace.name"
-          type="text"
-          :placeholder="placeholder.name"
-          class="field"
-        >
-      </div>
-      <div class="name">Должность:</div>
-      <div class="cell">
-        <input
-          v-model.trim="workPlace.position"
-          type="text"
-          :placeholder="placeholder.position"
-          class="field"
-        >
-      </div>
-      <div class="name">Телефон:</div>
-      <div class="cell">
-        <input
-          v-model.trim="workPlace.telephone"
-          type="text"
-          :placeholder="placeholder.telephone"
-          class="field"
-        >
-      </div>
-      <div class="name">IP-адрес:</div>
-      <div class="cell">
-        <input
-          v-model.trim="workPlace.IPAddress"
-          type="text"
-          :placeholder="placeholder.IPAddress"
-          class="field"
-        >
-      </div>
-      <div class="name">Пароль:</div>
-      <div class="cell">
-        <input
-          v-model.trim="workPlace.password"
-          type="text"
-          :placeholder="placeholder.password"
-          class="field"
-        >
-      </div>
-      <div class="name">AO:</div>
-      <div class="cell">
-        <input
-          v-model.trim="workPlace.AO"
-          type="text"
-          :placeholder="placeholder.AO"
-          class="field"
-        >
-      </div>
-      <div class="name">Формы ЭТД:</div>
-      <div class="cell">
-        <input
-          v-model.trim="workPlace.ATDForms"
-          type="text"
-          :placeholder="placeholder.ATDForms"
-          class="field"
-        >
-      </div>
-      <div class="name">Описание:</div>
-      <div class="cell">
+      <InputField
+        class="table__row"
+        v-model="workPlace.name"
+        :name="placeholder.name"
+        :placeholder="placeholder.name"
+        :error="workPlaceError.name"
+      />
+      <InputField
+        class="table__row"
+        v-model="workPlace.position"
+        :name="placeholder.position"
+        :placeholder="placeholder.position"
+        :error="workPlaceError.position"
+      />
+      <InputField
+        class="table__row"
+        v-model="workPlace.telephone"
+        :name="placeholder.telephone"
+        :placeholder="placeholder.telephone"
+        :error="workPlaceError.telephone"
+      />
+      <InputField
+        class="table__row"
+        v-model="workPlace.IPAddress"
+        :name="placeholder.IPAddress"
+        :placeholder="placeholder.IPAddress"
+        :error="workPlaceError.IPAddress"
+      />
+      <InputField
+        class="table__row"
+        v-model="workPlace.password"
+        :name="placeholder.password"
+        :placeholder="placeholder.password"
+        :error="workPlaceError.password"
+      />
+      <InputField
+        class="table__row"
+        v-model="workPlace.AO"
+        :name="placeholder.AO"
+        :placeholder="placeholder.AO"
+        :error="workPlaceError.AO"
+      />
+      <InputField
+        class="table__row"
+        v-model="workPlace.ATDForms"
+        :name="placeholder.ATDForms"
+        :placeholder="placeholder.ATDForms"
+        :error="workPlaceError.ATDForms"
+      />
+      <div class="table__row direction-row">
+        <div class="table__row__column-name">Описание</div>
+        <div class="table__row__cell">
         <textarea
           v-model="workPlace.description"
           :placeholder="placeholder.description"
-          class="field field-textarea description"
+          class="table__row__cell__field"
         ></textarea>
+        </div>
       </div>
-      <div class="empty"></div>
-      <div class="cell messages messages-header">Перечень сообщений, передаваемых в АСОУП</div>
-      <div class="cell messages">
-        <textarea
-          v-model="workPlace.ASOUPMessage"
-          :placeholder="placeholder.ASOUPMessage"
-          class="field field-textarea description"
-        ></textarea>
+      <div class="table__row direction-row">
+        <div class="table__row__column-name">Перечень сообщений, передаваемых в АСОУП</div>
+        <div class="table__row__cell">
+          <textarea
+            v-model="workPlace.ASOUPMessage"
+            :placeholder="placeholder.ASOUPMessage"
+            class="table__row__cell__field"
+          ></textarea>
+        </div>
       </div>
     </div>
     <div class="menu">
-      <Button v-if="!isPresent" class="button" :text="saveButtonText" @click="editHandler(true)"/>
-      <Button class="button" :text="declineButtonText" @click="editHandler(false)"/>
+      <Button v-if="!isPresent" class="menu__button" :text="saveButtonText" @click="editHandler(true)"/>
+      <Button class="menu__button" :text="declineButtonText" @click="editHandler(false)"/>
     </div>
   </div>
 </template>
@@ -113,6 +120,7 @@
   export default {
     name: 'WorkPlaceEditor',
     components: {
+      InputField: () => import('@/components/InputField.vue'),
       Button: () => import('@/components/Button.vue'),
     },
     props: ['editableContent', 'edit'],
@@ -132,6 +140,17 @@
           description: '',
           ASOUPMessage: '',
         },
+        workPlaceError: {
+          name: null,
+          position: null,
+          telephone: null,
+          IPAddress: null,
+          password: null,
+          AO: null,
+          ATDForms: null,
+          description: null,
+          ASOUPMessage: null,
+        },
         placeholder: {
           name: 'Рабочее место',
           position: 'Должность',
@@ -141,6 +160,7 @@
           AO: 'AO',
           ATDForms: 'Формы ЭТД',
           description: 'Описание',
+          ASOUPMessage: 'Сообщения передаваемые в АСОУП',
         },
         errors: [],
       };
@@ -155,6 +175,8 @@
     },
     methods: {
       editHandler(isUpdate) {
+        console.log(this.workPlace);
+        console.log(isUpdate);
         this.$emit('close', isUpdate);
       },
     },
@@ -177,71 +199,54 @@
     display: flex
     flex-direction: column
     width: 100%
+    font-size: base-unit(20)
 
     .table
-      display: grid
-      grid-template-columns: base-unit(200) auto
-      grid-template-rows: auto
-      column-gap: base-unit(45)
-      row-gap: base-unit(5)
+      display: flex
+      flex-direction: column
       align-items: center
-      margin: base-unit(20) 0
-      font-size: base-unit(24)
-      padding: 0 base-unit(20)
+      padding: base-unit(20) base-unit(10) base-unit(20)
 
-      .empty
-        grid-column: 1 / 3
-        height: base-unit(10)
-
-      .messages
-        grid-column: 1 / 3
-        padding: 0 base-unit(20)
-
-        &-header
-          border-top: 2px solid $dust-storm-color
-
-      .cell
+      &__row
         display: flex
-        align-items: center
-        justify-content: center
-        height: base-unit(50)
-
-      .name
-        justify-self: end
-
-      .content
-        justify-content: flex-start
-
-      .header
-        background-color: $dust-storm-color
-        font-size: base-unit(30)
-
-      .field
-        color: $pickled-bluewood-color
-        padding-left: base-unit(10)
         width: 100%
-        height: base-unit(40)
-        border: 2px solid $blossom-color
-        font-size: base-unit(24)
-        border-radius: 10px
-        background-color: $soft-peach-color
+        padding-bottom: base-unit(10)
 
-        &-textarea
-          max-width: base-unit(1151)
-          height: base-unit(60)
-          resize: vertical
+        &__name
+          text-align: end
+          width: base-unit(200)
+          margin-right: base-unit(40)
 
-          &:focus
-            background-color: initial
+        &__column-name
+          text-align: center
+          width: 100%
+          padding-bottom: base-unit(10)
 
-          &:focus
-            background-color: initial
+        &__cell
+          display: flex
+          align-items: center
+          justify-content: center
 
-        &:hover
-          background-color: $dust-storm-color
+          &__field
+            color: $pickled-bluewood-color
+            padding-left: base-unit(10)
+            width: 100%
+            border: 2px solid $blossom-color
+            font-size: base-unit(24)
+            border-radius: 10px
+            background-color: $soft-peach-color
+            max-width: base-unit(1151)
+            height: base-unit(60)
+            resize: vertical
 
-        &:focus
-          background-color: $dust-storm-color
+            &:focus
+              background-color: initial
+
+            &:focus
+              background-color: initial
+
+    .direction-row
+      flex-direction: column
 
     .menu
       border-top: 2px solid $dust-storm-color
@@ -250,7 +255,7 @@
       padding: base-unit(20) 0
       margin: 0 base-unit(20)
 
-      .button
+      &__button
         align-self: flex-end
         font-size: base-unit(24)
         width: base-unit(260)

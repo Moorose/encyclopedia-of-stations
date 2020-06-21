@@ -36,7 +36,7 @@
 
     .content
       margin: auto
-      width: 80%
+      width: fit-content
       background: $soft-peach-color
       border: 2px solid $dust-storm-color
       border-radius: 5px
